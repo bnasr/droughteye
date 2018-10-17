@@ -58,6 +58,15 @@ get_MOD11C3 <- function(year, month, modis_repo){
 
 # read modis and prism and write detla T
 write_detla_t <- function(y, m, deltat_repo){
+  
+  delta_path <- sprintf(fmt = '%sDELTA/DELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
+  
+  if(file.exists(delta_path)){
+    cat(delta_path, ' already exists!\n')
+    return(delta_path)
+  }
+  
+  
   lst_path <- sprintf(fmt = '%sGEOTIFF/LST.Day.%04d.%02d.01.tif', 
                       modis_repo, y, m)
   
@@ -91,14 +100,66 @@ write_detla_t <- function(y, m, deltat_repo){
   
   deltat <- ts-ta-273.15
   
-  delta_path <- sprintf(fmt = '%sDELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
-  
-  if(file.exists(delta_path)){
-    cat(delta_path, ' already exists!\n')
-    return(delta_path)
-  }
   
   writeRaster(deltat, delta_path)
   
   return(delta_path)
+}
+
+
+write_detla_t_normal <- function(m, deltat_repo){
+  
+  delta_normal_path <- sprintf(fmt = '%sNORMAL/DELTAT.NORMAL.%02d.01.tif', deltat_repo, m)
+  
+  if(file.exists(delta_normal_path)){
+    cat(delta_normal_path, ' already exists!\n')
+    return(delta_normal_path)
+  }
+  
+  y <- 2001:2012
+  
+  delta_path <- sprintf(fmt = '%sDELTA/DELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
+  
+  delta_t <- lapply(delta_path, raster)
+  
+  n <- length(delta_t)
+  
+  deltat_normal <- delta_t[[1]]
+  
+  for(i in 2:n) deltat_normal <- deltat_normal + delta_t[[i]]
+  
+  deltat_normal <- deltat_normal/n
+  
+  writeRaster(deltat_normal, delta_normal_path)
+  
+  return(delta_normal_path)
+}
+
+write_detla_t_anomaly <- function(y, m, deltat_repo){
+  
+  delta_anomaly_path <- sprintf(fmt = '%sANOMALY/DELTAT.ANOMALY.%04d.%02d.01.tif', deltat_repo, y, m)
+  
+  if(file.exists(delta_anomaly_path)){
+    cat(delta_anomaly_path, ' already exists!\n')
+    return(delta_anomaly_path)
+  }
+  
+  delta_path <- sprintf(fmt = '%sDELTA/DELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
+  
+  if(!file.exists(delta_path))
+    stop(paste(delta_path, 'not found!'))
+  
+  delta_normal_path <- sprintf(fmt = '%sNORMAL/DELTAT.NORMAL.%02d.01.tif', deltat_repo, m)
+  
+  if(!file.exists(delta_normal_path))
+    stop(paste(delta_normal_path, 'not found!'))
+  
+  delta <- raster(delta_path)
+  delta_normal <- raster(delta_normal_path)
+  
+  delta_anomaly <- delta - delta_normal
+  
+  writeRaster(delta_anomaly, delta_anomaly_path)
+  
+  return(delta_anomaly_path)
 }
