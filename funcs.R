@@ -163,3 +163,31 @@ write_detla_t_anomaly <- function(y, m, deltat_repo){
   
   return(delta_anomaly_path)
 }
+
+northArrow <- function (xb, yb, len, lab = "NORTH", cex.lab = 1, tcol = "black", 
+                        ...) 
+{
+  s <- len
+  arrow.x = c(-1, 1, 1, 2, 0, -2, -1, -1)/2
+  arrow.y = c(0, 0, 2, 2, 4, 2, 2, 0)
+  polygon(xb + arrow.x * s, yb + arrow.y * s, ...)
+  text(xb, yb - strheight(lab, cex = cex.lab), lab, cex = cex.lab, 
+       col = tcol)
+}
+
+setRange <- function(r, rng=quantile(r, probs=c(.01,.99))){
+  r[r<rng[1]] <- rng[1]
+  r[r>rng[2]] <- rng[2]
+  r
+}
+
+insertLegend <- function(rng, col){
+  bty <- par()$bty
+  par(bty='o')
+  image.plot(legend.only=TRUE, zlim= rng, 
+             smallplot= c(.89, .93, .10, .80),
+             axis.args = list(cex.axis = 1, font=2),
+             legend.args = list(text= '°C', side=3,xpd=T, adj=0, line=.7, font=2), 
+             col = col, horizontal = F, yaxt='s') 
+  par(bty=bty)
+}
