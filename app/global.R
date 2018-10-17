@@ -22,3 +22,5 @@ new.packages <- list.of.packages[!(list.of.packages %in% installed.packages()[,"
 if(length(new.packages)) install.packages(new.packages, repos='http://cran.rstudio.com/')
 
 for(p in list.of.packages) library(p, character.only = T)
+
+source('/home/bijan/Projects/droughteye/')
