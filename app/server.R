@@ -1,9 +1,13 @@
 shinyServer(function(input, output, session) {
   
+  monthid <- reactive({
+    which(input$month ==month.name)
+  })
+  
   delta_anomaly_path <- reactive({
     
     y <- as.numeric(input$year)
-    m <- as.numeric(input$month)
+    m <- monthid()
     
     path <- sprintf(fmt = '%sANOMALY/DELTAT.ANOMALY.%04d.%02d.01.tif', deltat_repo, y, m)
     
@@ -17,7 +21,7 @@ shinyServer(function(input, output, session) {
     
     y <- as.numeric(input$year)
     
-    m <- as.numeric(input$month)
+    m <- monthid()
     
     path <- sprintf(fmt = '%sDELTA/DELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
     
@@ -30,7 +34,7 @@ shinyServer(function(input, output, session) {
     
     y <- as.numeric(input$year)
     
-    m <- as.numeric(input$month)
+    m <- monthid()
     
     path <- sprintf(fmt = '%sNORMAL/DELTAT.NORMAL.%02d.01.tif', deltat_repo, m)
     
@@ -43,7 +47,7 @@ shinyServer(function(input, output, session) {
     
     y <- as.numeric(input$year)
     
-    m <- as.numeric(input$month)
+    m <- monthid()
     
     path <- sprintf(fmt = '%sGEOTIFF/LST.Day.%04d.%02d.01.tif', 
                     modis_repo, y, m)
@@ -58,7 +62,7 @@ shinyServer(function(input, output, session) {
     
     y <- as.numeric(input$year)
     
-    m <- as.numeric(input$month)
+    m <- monthid()
     
     prism_stable_path <- sprintf(fmt = '%sPRISM_tmean_stable_4kmM2_%04d%02d_bil/PRISM_tmean_stable_4kmM2_%04d%02d_bil.bil', 
                                  prism_repo, y, m, y, m)
@@ -93,6 +97,8 @@ shinyServer(function(input, output, session) {
     r <- setRange(map)
 
     par(mar=c(1,1,1,1), oma=c(2,2,2,1), bty='n')
+    par(bg = 'blue')
+    
     plot(r, col = col, legend = F, xaxt='n', yaxt='n')
     # map('usa', add = T)
     # plot(physio, add=T)
