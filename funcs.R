@@ -56,3 +56,49 @@ get_MOD11C3 <- function(year, month, modis_repo){
   tiff_path
 }
 
+# read modis and prism and write detla T
+write_detla_t <- function(y, m, deltat_repo){
+  lst_path <- sprintf(fmt = '%sGEOTIFF/LST.Day.%04d.%02d.01.tif', 
+                      modis_repo, y, m)
+  
+  prism_stable_path <- sprintf(fmt = '%sPRISM_tmean_stable_4kmM2_%04d%02d_bil/PRISM_tmean_stable_4kmM2_%04d%02d_bil.bil', 
+                               prism_repo, y, m, y, m)
+  
+  prism_provisional_path <- sprintf(fmt = '%sPRISM_tmean_provisional_4kmM2_%04d%02d_bil/PRISM_tmean_provisional_4kmM2_%04d%02d_bil.bil', 
+                                    prism_repo, y, m, y, m)
+  
+  if(file.exists(prism_stable_path)){
+    prism_path <- prism_stable_path
+  }else{
+    if(file.exists(prism_provisional_path)){
+      prism_path <- prism_provisional_path
+    }else{
+      stop(paste(prism_stable_path, 'and', prism_provisional_path, 'not found!'))
+    }
+  }
+  
+  if(!file.exists(lst_path)){
+    stop(paste(lst_path, 'not found!'))
+  }
+  
+  file.exists(prism_provisional_path)
+  
+  lst <- raster(lst_path)
+  ta <- raster(prism_path)
+  
+  
+  ts <- projectRaster(lst, ta)
+  
+  deltat <- ts-ta-273.15
+  
+  delta_path <- sprintf(fmt = '%sDELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
+  
+  if(file.exists(delta_path)){
+    cat(delta_path, ' already exists!\n')
+    return(delta_path)
+  }
+  
+  writeRaster(deltat, delta_path)
+  
+  return(delta_path)
+}
