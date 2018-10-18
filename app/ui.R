@@ -37,6 +37,7 @@ fluidPage(
     
     mainPanel = mainPanel(width = 10,
                           tabsetPanel(
+                            
                             tabPanel('Thermal Stress Map',
                                      
                                      br(),
@@ -51,6 +52,9 @@ fluidPage(
                             ),
                             
                             tabPanel('Physiographic Map', 
+                                     br(),
+                                     br(),
+                                     
                                      plotOutput('physio_plot', width = '100%')
                             ))           
     )
