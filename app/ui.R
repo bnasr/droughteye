@@ -3,7 +3,7 @@ fluidPage(
   h1('Drought Eye: Monitoring thermal stress in near real time'),
   hr(),
   theme = shinytheme('darkly'),
-  title =  titlePanel(title = 'Drought Eye: Monitoring thermal stress in near real time', windowTitle = 'windowTitle'), 
+  title =  titlePanel(title = 'Drought Eye: Monitoring thermal stress in near real-time', windowTitle = 'windowTitle'), 
   sidebarLayout(
     
     sidebarPanel(width = 2,
@@ -56,7 +56,11 @@ fluidPage(
                                      br(),
                                      br(),
                                      plotOutput('physio_plot', width = '100%')
-                            ))           
+                            )),
+                          
+                          tabPanel('About',{
+                            includeHTML('about.html')
+                          })
     )
   )
 )
