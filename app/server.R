@@ -155,13 +155,13 @@ shinyServer(function(input, output, session) {
       par(mar=c(4,0,2,0), oma=c(2,0,0,0))
       plot(provs, col=colList)
       
-      legend(-110, 25.5,legend = labs[2:7] , xpd=T,xjust = 1,
+      legend(-110, 25.0,legend = labs[2:7] , xpd=T,xjust = 1,
              fill = colList[2:7], bty='n', cex=1.5)
-      legend(-97, 25.5,legend = labs[8:13] , xpd=T,xjust = 1,
+      legend(-97, 25.0,legend = labs[8:13] , xpd=T,xjust = 1,
              fill = colList[8:13], bty='n', cex=1.5)
-      legend(-80, 25.5,legend = labs[14:19] , xpd=T,xjust = 1,
+      legend(-80, 25.0,legend = labs[14:19] , xpd=T,xjust = 1,
              fill = colList[14:19], bty='n', cex=1.5)
-      legend(-65, 25.5,legend = labs[20:25] , xpd=T,xjust = 1,
+      legend(-65, 25.0,legend = labs[20:25] , xpd=T,xjust = 1,
              fill = colList[20:25], bty='n', cex=1.5)
       
       mtext('United States Physiographic Regions', cex=2, font=2, line = 0)
