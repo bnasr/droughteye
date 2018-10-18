@@ -24,9 +24,13 @@ fluidPage(
                              choices = 2001:year(Sys.Date()), 
                              selected = year(Sys.Date())),
                  
+		hr(),
+		
 		 selectInput('colorpal', 
 				label = 'Color Palette',
 				choices = c('Default', 'Purple-Orange', 'Green-Brown', 'Green-Red')),
+
+		hr(),
 
                  downloadButton("downloadmap", "Download raster")
     ),
