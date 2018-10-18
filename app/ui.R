@@ -56,11 +56,12 @@ fluidPage(
                                      br(),
                                      br(),
                                      plotOutput('physio_plot', width = '100%')
-                            )),
+                            ),
+                            tabPanel('About',{
+                              includeHTML('about.html')
+                            })
+                          )
                           
-                          tabPanel('About',{
-                            includeHTML('about.html')
-                          })
     )
   )
 )
