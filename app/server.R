@@ -144,7 +144,7 @@ shinyServer(function(input, output, session) {
   
   output$physio_plot <- renderPlot(
     height = function(){floor(session$clientData$output_map_width/1.75)}, {
-      physio <- raster::shapefile('/home/bijan/Projects/droughteye/data/physioProvinceLatLon/physioProvinceLatLon.shp')
+      physio <- raster::shapefile('/home/bijan/Projects/droughteye/data/physio/physio.shp')
       provs <- physio
       
       n <- length(provs$PROVINCE)
