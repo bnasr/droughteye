@@ -1,5 +1,7 @@
 fluidPage(
   br(),
+  h1('Drought Eye: Monitoring thermal stress in near real time'),
+  hr(),
   theme = shinytheme('darkly'),
   title =  titlePanel(title = 'Drought Eye: Monitoring thermal stress in near real time', windowTitle = 'windowTitle'), 
   sidebarLayout(
@@ -20,10 +22,16 @@ fluidPage(
                  selectInput('year', 
                              label = 'Year', 
                              choices = 2001:year(Sys.Date()), 
-                             selected = year(Sys.Date()))
+                             selected = year(Sys.Date())),
+                 
+		 selectInput('colorpal', 
+				label = 'Color Palette',
+				choices = c('Default', 'Purple-Orange', 'Green-Brown', 'Green-Red')),
+
+                 downloadButton("downloadmap", "Download raster")
     ),
     
-    mainPanel = mainPanel(
+    mainPanel = mainPanel(width = 10,
 
       br(),
       radioButtons('month', 
@@ -33,7 +41,7 @@ fluidPage(
                   selected = month.name[max(1, month(Sys.Date())-1)]
                   ),
       
-      plotOutput('map')
+      plotOutput('map', width = '100%')
       
     )
   )

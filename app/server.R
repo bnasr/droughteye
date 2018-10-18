@@ -1,3 +1,6 @@
+source('/home/bijan/Projects/droughteye/funcs.R')
+
+
 shinyServer(function(input, output, session) {
   
   monthid <- reactive({
@@ -84,7 +87,8 @@ shinyServer(function(input, output, session) {
                    'Anomaly' = delta_anomaly_path()
     )
   })
-  output$map <- renderPlot(height = 800, {
+  output$map <- renderPlot(
+    height = function(){floor(session$clientData$output_map_width/1.75)}, {
     
     path <- map_path()
     if(is.null(path)) return()
@@ -92,18 +96,30 @@ shinyServer(function(input, output, session) {
     
     map <- raster(path)
     
-    col <- colorRampPalette(colList.Contad)(100)
+    colList <- switch(input$colorpal,
+		'Default' = colList.Contad,
+		'Purple-Orange' = colList.purpleOrange,
+		'Green-Brown' = colList.greenBrown,
+		'Green-Red' = colList.greenRed)
+
+    col <- colorRampPalette(colList)(100)
     
     r <- setRange(map)
 
-    par(mar=c(1,1,1,1), oma=c(2,2,2,1), bty='n')
+    par(mar=c(6,6,4,1), bty='n', xpd = TRUE)
     par(bg = 'blue')
     
-    plot(r, col = col, legend = F, xaxt='n', yaxt='n')
+    plot(r, col = col, legend = F, xaxt='n', yaxt = 'n')
     # map('usa', add = T)
     # plot(physio, add=T)
-    
-    scalebar(d = 1000, xy = c(-122, 25),type = 'bar', below = 'kilometers', divs = 4)
+    axis(1, line = 1, cex.axis = 2)
+    axis(2, line = 1, cex.axis = 2)
+
+    mtext(plot_title(), font=2, line = 1, cex = 3)
+    mtext('Longitude (°)', font = 2, line = 4, cex = 2, side =1)
+    mtext('Latitude (°)', font = 2, line = 4, cex = 2, side =2)
+
+    scalebar(d = 1000, xy = c(-122, 26),type = 'bar', below = 'kilometers', divs = 4)
     northArrow(xb = -75, yb = 25, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
     insertLegend(quantile(r, probs=c(.01,.99)), col)
     
@@ -112,10 +128,23 @@ shinyServer(function(input, output, session) {
     # mtext('Low', side = 2, line = -26.5, at = 41.5, font=2)
     # mtext('High', side = 2, line = -26.5, at = 30, font=2)
     
-    mtext('Longitude (°C)', side = 1, line = 2)
-    mtext('Latitude (°C)', side = 2, line = 2)
-    
-    
   })
   
+  plot_title <- reactive({
+	switch(input$mapType,
+		'Normal' = paste('Normal thermal stress in', input$month, 'across the USA'),
+		'Temporal' =  paste('Thermal stress in', input$month, input$year, 'across the USA'),
+		'Anomaly' =  paste('Thermal stress anomaly in', input$month, input$year, 'across the USA'))
+  })
+
+  output$downloadmap <- downloadHandler(
+    filename = function() {
+      basename(map_path())
+    },
+    content = function(file) {
+      path <- map_path()
+      if(is.null(path)) return()
+      file.copy(path, to = file)
+    }
+  )
 })
