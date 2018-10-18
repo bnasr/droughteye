@@ -154,8 +154,6 @@ shinyServer(function(input, output, session) {
       
       par(mar=c(4,0,2,0), oma=c(2,0,0,0))
       plot(provs, col=colList)
-      scalebar(d = 1000, xy = c(-122, 27),type = 'bar', below = 'kilometers', divs = 4)
-      northArrow(xb = -72, yb = 31, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
       
       legend(-110, 25.5,legend = labs[2:7] , xpd=T,xjust = 1,
              fill = colList[2:7], bty='n', cex=1.5)
@@ -167,6 +165,8 @@ shinyServer(function(input, output, session) {
              fill = colList[20:25], bty='n', cex=1.5)
       
       mtext('United States Physiographic Regions', cex=2, font=2, line = 0)
+      scalebar(d = 1000, xy = c(-122, 27),type = 'bar', below = 'kilometers', divs = 4)
+      northArrow(xb = -72, yb = 31, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
       
       
       
