@@ -113,7 +113,7 @@ shinyServer(function(input, output, session) {
       
       plot(r, col = col, legend = F, xaxt='n', yaxt = 'n')
       # map('usa', add = T)
-      plot(physio(), add=T)
+      plot(physio(), add=T, lwd = 2)
       axis(1, line = 1, cex.axis = 2)
       axis(2, line = 1, cex.axis = 2)
       
