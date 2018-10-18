@@ -22,6 +22,8 @@ if(length(new.packages)) install.packages(new.packages, repos='http://cran.rstud
 
 for(p in list.of.packages) library(p, character.only = T)
 
-source('~/Projects/droughteye/env_vars.R')
-source('~/Projects/droughteye/funcs.R')
-source('~/Projects/droughteye/colors.R')
+source('/home/bijan/Projects/droughteye/env_vars.R')
+source('/home/bijan/Projects/droughteye/funcs.R')
+source('/home/bijan/Projects/droughteye/colors.R')
+
+data_repo <- '/home/bijan/Projects/droughteye/data/'
