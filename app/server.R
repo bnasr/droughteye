@@ -152,7 +152,7 @@ shinyServer(function(input, output, session) {
       colList <- c('NA',rainbow(n-1))
       
       
-      par(mar=c(4,0,2,0), oma=c(2,0,0,0))
+      par(mar=c(4,0,2,0), oma=c(0,0,0,0))
       plot(provs, col=colList)
       
       legend(-110, 26.0,legend = labs[2:7] , xpd=T,xjust = 1,
