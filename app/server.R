@@ -89,14 +89,12 @@ shinyServer(function(input, output, session) {
     )
   })
   
-  #physio <- shapefile('/home/bijan/Projects/droughteye/data/physioProvinceLatLon/physioProvinceLatLon.shp')
   
   output$map <- renderPlot(
     height = function(){floor(session$clientData$output_map_width/1.75)}, {
       
       path <- map_path()
       if(is.null(path)) return()
-      # physio <- shapefile('/home/bijan/Projects/droughteye/data/physioProvinceLatLon/physioProvinceLatLon.shp')
       
       map <- raster(path)
       
@@ -115,7 +113,7 @@ shinyServer(function(input, output, session) {
       
       plot(r, col = col, legend = F, xaxt='n', yaxt = 'n')
       # map('usa', add = T)
-      # plot(physio, add=T)
+      plot(physio(), add=T)
       axis(1, line = 1, cex.axis = 2)
       axis(2, line = 1, cex.axis = 2)
       
@@ -141,11 +139,14 @@ shinyServer(function(input, output, session) {
            'Anomaly' =  paste('Thermal stress anomaly in', input$month, input$year, 'across the USA'))
   })
   
+  physio <- reactive(
+    raster::shapefile('/home/bijan/Projects/droughteye/data/physio/physio.shp')
+    )
+  
   
   output$physio_plot <- renderPlot(
     height = function(){floor(session$clientData$output_map_width/1.75)}, {
-      physio <- raster::shapefile('/home/bijan/Projects/droughteye/data/physio/physio.shp')
-      provs <- physio
+      provs <- physio()
       
       n <- length(provs$PROVINCE)
       labs <- tools::toTitleCase(tolower(provs$PROVINCE))
