@@ -24,29 +24,35 @@ fluidPage(
                              choices = 2001:year(Sys.Date()), 
                              selected = year(Sys.Date())),
                  
-		hr(),
-		
-		 selectInput('colorpal', 
-				label = 'Color Palette',
-				choices = c('Default', 'Purple-Orange', 'Green-Brown', 'Green-Red')),
-
-		hr(),
-
+                 hr(),
+                 
+                 selectInput('colorpal', 
+                             label = 'Color Palette',
+                             choices = c('Default', 'Purple-Orange', 'Green-Brown', 'Green-Red')),
+                 
+                 hr(),
+                 
                  downloadButton("downloadmap", "Download raster")
     ),
     
     mainPanel = mainPanel(width = 10,
-
-      br(),
-      radioButtons('month', 
-                  label = NULL, 
-                  inline = TRUE,
-                  choices = month.name,
-                  selected = month.name[max(1, month(Sys.Date())-1)]
-                  ),
-      
-      plotOutput('map', width = '100%')
-      
+                          tabsetPanel(
+                            tabPanel('Thermal Stress Map',
+                                     
+                                     br(),
+                                     radioButtons('month', 
+                                                  label = NULL, 
+                                                  inline = TRUE,
+                                                  choices = month.name,
+                                                  selected = month.name[max(1, month(Sys.Date())-1)]
+                                     ),
+                                     
+                                     plotOutput('map', width = '100%')
+                            ),
+                            
+                            tabPanel('Physiographic Map', 
+                                     plotOutput('physio_plot', width = '100%')
+                            ))           
     )
   )
 )
