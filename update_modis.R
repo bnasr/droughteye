@@ -1,3 +1,7 @@
+cat('\n\n=============================================================================================\n')
+
+cat(Sys.time(), '\t updating MODIS ...\n')
+
 source('required_libs.R')
 source('env_vars.R')
 source('funcs.R')
@@ -14,3 +18,4 @@ for(y in 2001:this_year){
   }
 }
 
+cat(Sys.time(), '\t MODIS done!\n')

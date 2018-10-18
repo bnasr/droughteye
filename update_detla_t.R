@@ -1,3 +1,7 @@
+cat('\n\n=============================================================================================\n')
+
+cat(Sys.time(), '\t updating delta_t ...\n')
+
 source('required_libs.R')
 source('env_vars.R')
 source('funcs.R')
@@ -12,3 +16,5 @@ for(y in 2001:this_year){
     write_detla_t(y, m, deltat_repo)
   }
 }
+
+cat(Sys.time(), '\t delta_t done!\n')
