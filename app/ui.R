@@ -26,9 +26,12 @@ fluidPage(
                  
                  hr(),
                  
-                 selectInput('colorpal', 
+                 radioButtons('colorpal', 
                              label = 'Color Palette',
-                             choices = c('Default', 'Purple-Orange', 'Green-Brown', 'Green-Red')),
+                             choices = c('Default', 
+                                         'Purple-Orange',
+                                         'Green-Brown', 
+                                         'Green-Red')),
                  
                  hr(),
                  
@@ -40,8 +43,10 @@ fluidPage(
                              selected = 'Physiographic Regions'),
                  
                  hr(),
+                 uiOutput("hovervalues"),
                  
-                 downloadButton("downloadmap", "Download raster")
+                 hr(),
+                 downloadButton("downloadmap", "Download Raster")
     ),
     
     mainPanel = mainPanel(width = 10,
@@ -57,15 +62,31 @@ fluidPage(
                                                   selected = month.name[max(1, month(Sys.Date())-1)]
                                      ),
                                      
-                                     plotOutput('map', width = '100%')
+                                     plotOutput('map', 
+                                                width = '100%', 
+                                                click = 'map_click', 
+                                                dblclick = 'map_dblclick', 
+                                                hover = 'map_hover')
                             ),
                             
                             tabPanel('Physiographic Map', 
                                      br(),
                                      br(),
                                      br(),
-                                     plotOutput('physio_plot', width = '100%')
+                                     plotOutput('physio_plot', 
+                                                width = '100%',
+                                                hover = 'physio_hover')
                             ),
+                            
+                            tabPanel('Percent Tree Cover', 
+                                     br(),
+                                     br(),
+                                     br(),
+                                     plotOutput('tree_percent_plot', 
+                                                width = '100%',
+                                                hover = 'tree_percent_hover')
+                            ),
+                            
                             tabPanel('About',{
                               includeHTML('about.html')
                             })
