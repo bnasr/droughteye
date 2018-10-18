@@ -181,13 +181,13 @@ setRange <- function(r, rng=quantile(r, probs=c(.01,.99))){
   r
 }
 
-insertLegend <- function(rng, col){
+insertLegend <- function(rng, col , legtext = '°C'){
   bty <- par()$bty
   par(bty='o')
   image.plot(legend.only=TRUE, zlim= rng, 
              smallplot= c(.89, .93, .10, .80),
              axis.args = list(cex.axis = 1.7, font=2),
-             legend.args = list(text= '°C', side = 4, xpd = T, adj = 0.5, line = 2.5, font = 2, cex = 2), 
+             legend.args = list(text= legtext, side = 4, xpd = T, adj = 0.5, line = 2.5, font = 2, cex = 2), 
              col = col, horizontal = F, yaxt='s') 
   par(bty=bty)
 }
