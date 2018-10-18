@@ -1,3 +1,4 @@
+library(raster)
 source('/home/bijan/Projects/droughteye/funcs.R')
 
 
@@ -143,7 +144,6 @@ shinyServer(function(input, output, session) {
   
   output$physio_plot <- renderPlot(
     height = function(){floor(session$clientData$output_map_width/1.75)}, {
-      library(raster)
       physio <- shapefile('~/Projects/droughteye/data/physioProvinceLatLon/physioProvinceLatLon.shp')
       provs <- physio
       
