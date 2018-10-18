@@ -1,9 +1,9 @@
 fluidPage(
   br(),
-  h1('Drought Eye: Monitoring thermal stress in near real time'),
+  h1('Drought Eye: Monitoring Thermal Stress in Near Real-time'),
   hr(),
   theme = shinytheme('darkly'),
-  title =  titlePanel(title = 'Drought Eye: Monitoring thermal stress in near real-time', windowTitle = 'windowTitle'), 
+  title =  titlePanel(title = 'Drought Eye: Monitoring Thermal Stress in Near Real-time', windowTitle = 'windowTitle'), 
   sidebarLayout(
     
     sidebarPanel(width = 2,
@@ -29,6 +29,15 @@ fluidPage(
                  selectInput('colorpal', 
                              label = 'Color Palette',
                              choices = c('Default', 'Purple-Orange', 'Green-Brown', 'Green-Red')),
+                 
+                 hr(),
+                 
+                 radioButtons('layout', 
+                             label = 'Borders layout',
+                             choices = c('USA Border', 
+                                         'State Borders',
+                                         'Physiographic Regions'), 
+                             selected = 'Physiographic Regions'),
                  
                  hr(),
                  

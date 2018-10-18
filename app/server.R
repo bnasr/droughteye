@@ -112,8 +112,11 @@ shinyServer(function(input, output, session) {
       par(bg = 'blue')
       
       plot(r, col = col, legend = F, xaxt='n', yaxt = 'n')
-      # map('usa', add = T)
-      plot(physio(), add=T, lwd = 2)
+      switch(input$layout, 
+             'USA Border' = map('usa', add = T, lwd = 2), 
+             'State Borders' = map('state', add = T, lwd = 2),
+             'Physiographic Regions' = plot(physio(), add = T, lwd = 2))
+      
       axis(1, line = 1, cex.axis = 2)
       axis(2, line = 1, cex.axis = 2)
       
@@ -145,7 +148,7 @@ shinyServer(function(input, output, session) {
   
   
   output$physio_plot <- renderPlot(
-    height = function(){floor(session$clientData$output_map_width/1.75)}, {
+    height = function(){floor(session$clientData$output_map_width/1.7)}, {
       provs <- physio()
       
       n <- length(provs$PROVINCE)
@@ -153,7 +156,7 @@ shinyServer(function(input, output, session) {
       colList <- c('NA',rainbow(n-1))
       
       
-      par(mar=c(4,0,2,0), oma=c(0,0,0,0))
+      par(mar=c(4,2,0,0))
       plot(provs, col=colList)
       
       legend(-110, 26.0,legend = labs[2:7] , xpd=T,xjust = 1,
@@ -165,7 +168,7 @@ shinyServer(function(input, output, session) {
       legend(-65, 26.0,legend = labs[20:25] , xpd=T,xjust = 1,
              fill = colList[20:25], bty='n', cex=1.5)
       
-      mtext('Physiographic Regions of the United States', cex=2, font=2, line = 0)
+      mtext('Physiographic Regions of the United States', cex=2, font=2, line = -2)
       scalebar(d = 1000, xy = c(-122, 27),type = 'bar', below = 'kilometers', divs = 4)
       northArrow(xb = -72, yb = 31, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
       
