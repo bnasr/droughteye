@@ -165,7 +165,7 @@ shinyServer(function(input, output, session) {
       legend(-65, 26.0,legend = labs[20:25] , xpd=T,xjust = 1,
              fill = colList[20:25], bty='n', cex=1.5)
       
-      mtext('United States Physiographic Regions', cex=2, font=2, line = 0)
+      mtext('Physiographic Regions of the United States', cex=2, font=2, line = 0)
       scalebar(d = 1000, xy = c(-122, 27),type = 'bar', below = 'kilometers', divs = 4)
       northArrow(xb = -72, yb = 31, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
       
