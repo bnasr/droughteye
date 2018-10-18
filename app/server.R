@@ -1,6 +1,5 @@
-library(raster)
 source('/home/bijan/Projects/droughteye/funcs.R')
-
+library(raster)
 
 shinyServer(function(input, output, session) {
   
@@ -112,6 +111,7 @@ shinyServer(function(input, output, session) {
       par(bg = 'blue')
       
       plot(r, col = col, legend = F, xaxt='n', yaxt = 'n')
+      
       switch(input$layout, 
              'USA Border' = map('usa', add = T, lwd = 2), 
              'State Borders' = map('state', add = T, lwd = 2),
@@ -143,12 +143,12 @@ shinyServer(function(input, output, session) {
   })
   
   physio <- reactive(
-    raster::shapefile('/home/bijan/Projects/droughteye/data/physio/physio.shp')
+    raster::shapefile(paste0(data_repo, 'physio/physio.shp'))
     )
   
   
   output$physio_plot <- renderPlot(
-    height = function(){floor(session$clientData$output_map_width/1.7)}, {
+    height = function(){floor(session$clientData$output_physio_plot_width/1.7)}, {
       provs <- physio()
       
       n <- length(provs$PROVINCE)
@@ -176,6 +176,51 @@ shinyServer(function(input, output, session) {
       
     }
   )
+  
+  output$tree_percent_plot <- renderPlot(
+    height = function(){floor(session$clientData$output_tree_percent_plot_width/1.7)}, {
+      tpc <- raster(paste0(data_repo, 'tree_percent_cover.tif'))
+      
+      col <- colorRampPalette(colList.brownGreen[-(1:2)])(100)
+
+      par(mar=c(6,6,4,1), bty='n', xpd = TRUE)
+      plot(tpc, col = col, legend = F, xaxt='n', yaxt = 'n')
+      
+      switch(input$layout, 
+             'USA Border' = map('usa', add = T, lwd = 2), 
+             'State Borders' = map('state', add = T, lwd = 2),
+             'Physiographic Regions' = plot(physio(), add = T, lwd = 2))
+      
+      axis(1, line = 1, cex.axis = 2)
+      axis(2, line = 1, cex.axis = 2)
+      
+      mtext('Percent Tree Cover from NLCD', font=2, line = 1, cex = 3)
+      mtext('Longitude (°)', font = 2, line = 4, cex = 2, side =1)
+      mtext('Latitude (°)', font = 2, line = 4, cex = 2, side =2)
+      
+      scalebar(d = 1000, xy = c(-122, 26),type = 'bar', below = 'kilometers', divs = 4)
+      northArrow(xb = -75, yb = 25, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
+      insertLegend(c(0, 100), col, legtext = '%')
+      
+    }
+  ) 
+  
+  output$hovervalues <- renderUI({
+    hover1 <- input$map_hover
+    hover2 <- input$physio_hover
+    hover3 <- input$tree_percent_hover
+    
+    if(is.null(hover1)&is.null(hover2)&is.null(hover3)) return('x: NULL, y: NULL')
+    
+    if(!is.null(hover1)) hover <- hover1
+    if(!is.null(hover2)) hover <- hover2
+    if(!is.null(hover3)) hover <- hover3
+    
+    sprintf('x: %2.2f, y: %2.2f', hover$x, hover$y)
+  })
+  
+  
+  # observeEvent(input$map_click)
   output$downloadmap <- downloadHandler(
     filename = function() {
       basename(map_path())
