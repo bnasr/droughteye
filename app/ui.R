@@ -54,7 +54,7 @@ fluidPage(
                             tabPanel('Physiographic Map', 
                                      br(),
                                      br(),
-                                     
+                                     br(),
                                      plotOutput('physio_plot', width = '100%')
                             ))           
     )
