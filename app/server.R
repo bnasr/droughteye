@@ -107,7 +107,10 @@ shinyServer(function(input, output, session) {
       
       col <- colorRampPalette(colList)(100)
       
-      r <- setRange(map_raster, rng = c(-3,3))
+      if(input$mapType=='Anomaly')
+        r <- setRange(map_raster, rng = c(-3,3))
+      else
+        r <- setRange(map_raster)
       
       par(mar=c(6,6,4,1), bty='n', xpd = TRUE)
       par(bg = 'blue')
