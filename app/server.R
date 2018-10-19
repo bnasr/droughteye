@@ -249,6 +249,7 @@ shinyServer(function(input, output, session) {
         rv$zonal_stats <- raster::extract(map_raster, phys)
         names(rv$zonal_stats) <- tools::toTitleCase(tolower(phys$PROVINCE))
         rv$zonal_up_to_date <- TRUE
+        rv$zonal_ttl <- plot_title()
         removeModal()
         
       }
@@ -263,10 +264,10 @@ shinyServer(function(input, output, session) {
       
       bp <- boxplot(q[ord], bty = 'n', outline = FALSE, col= colList[ord], axes = F)
       axis(2, cex.axis = 1.5, line = -1)
-      mtext(plot_title(), font=2, line = 1, cex = 3)
+      mtext(rv$zonal_ttl, font=2, line = 1, cex = 3)
       mtext('°C', font=2, line = 2, cex = 2, side = 2)
-      text((1:n)-0.15, bp$stats[4,], labs, srt = 90, adj = 0, cex = 1.2, font = 2)
-      
+      text((1:n)-0.15, bp$stats[4,], labs[ord], srt = 90, adj = -0.05, cex = 1.2, font = 2)
+      abline(h = 0, lty = 2, lwd = 4, col ='#80808080')
       })
   
   
