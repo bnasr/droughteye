@@ -175,14 +175,14 @@ shinyServer(function(input, output, session) {
       
       
     }
-  )
+  ) 
   
   output$tree_percent_plot <- renderPlot(
     height = function(){floor(session$clientData$output_tree_percent_plot_width/1.7)}, {
       tpc <- raster(paste0(data_repo, 'tree_percent_cover.tif'))
       
-      col <- colorRampPalette(colList.brownGreen[-(1:2)])(100)
-
+      # col <- colorRampPalette(colList.brownGreen[-(1:2)])(100)
+      col <- rev(terrain.colors(100))
       par(mar=c(6,6,4,1), bty='n', xpd = TRUE)
       plot(tpc, col = col, legend = F, xaxt='n', yaxt = 'n')
       
@@ -210,13 +210,18 @@ shinyServer(function(input, output, session) {
     hover2 <- input$physio_hover
     hover3 <- input$tree_percent_hover
     
-    if(is.null(hover1)&is.null(hover2)&is.null(hover3)) return('x: NULL, y: NULL')
+    if(is.null(hover1)&is.null(hover2)&is.null(hover3)) return(HTML('<p>Longitude: NULL<br/>Latitude: NULL<br/>Region: NULL</p>'))
     
     if(!is.null(hover1)) hover <- hover1
     if(!is.null(hover2)) hover <- hover2
     if(!is.null(hover3)) hover <- hover3
     
-    sprintf('x: %2.2f, y: %2.2f', hover$x, hover$y)
+    phys <- physio()
+    
+    poly_no <- whichPolygon(matrix(c(hover$x, hover$y), nrow =1), shape = phys)
+    province <- phys$PROVINCE[poly_no]
+    province <- tools::toTitleCase(tolower(province))
+    HTML(sprintf('<p> Longitude: %.3f<br/>Latitude: %.3f<br/>Region: %s</p>', hover$x, hover$y, province))
   })
   
   
