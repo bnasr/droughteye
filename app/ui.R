@@ -27,20 +27,20 @@ fluidPage(
                  hr(),
                  
                  radioButtons('colorpal', 
-                             label = 'Color Palette',
-                             choices = c('Default', 
-                                         'Purple-Orange',
-                                         'Green-Brown', 
-                                         'Green-Red')),
+                              label = 'Color Palette',
+                              choices = c('Default', 
+                                          'Purple-Orange',
+                                          'Green-Brown', 
+                                          'Green-Red')),
                  
                  hr(),
                  
                  radioButtons('layout', 
-                             label = 'Borders layout',
-                             choices = c('USA Border', 
-                                         'State Borders',
-                                         'Physiographic Regions'), 
-                             selected = 'Physiographic Regions'),
+                              label = 'Borders layout',
+                              choices = c('USA Border', 
+                                          'State Borders',
+                                          'Physiographic Regions'), 
+                              selected = 'Physiographic Regions'),
                  
                  hr(),
                  uiOutput("hovervalues"),
@@ -62,11 +62,21 @@ fluidPage(
                                                   selected = month.name[max(1, month(Sys.Date())-1)]
                                      ),
                                      
-                                     plotOutput('map', 
+                                     plotOutput('map_plot', 
                                                 width = '100%', 
                                                 click = 'map_click', 
                                                 dblclick = 'map_dblclick', 
                                                 hover = 'map_hover')
+                            ),
+                            
+                            tabPanel('Zonal Statistics', 
+                                     br(),
+                                     actionButton('update_zonal', 
+                                                  label = HTML('<strong style="color:#ff0000;">Zonal stats are not up-to-date. Click here to update</strong>'),
+                                                  icon = icon('redo'), width = '100%'),
+                                     hr(),
+                                     plotOutput('zonal_plot', 
+                                                width = '100%')
                             ),
                             
                             tabPanel('Physiographic Map', 
