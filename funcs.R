@@ -191,3 +191,11 @@ insertLegend <- function(rng, col , legtext = '°C'){
              col = col, horizontal = F, yaxt='s') 
   par(bty=bty)
 }
+
+whichPolygon <- function(coords, shape){
+  shape@data<- cbind(1:nrow(shape@data), shape@data)
+  crs.shape<- projection(shape)
+  coords2<- SpatialPoints(coords, proj4string = CRS(crs.shape))
+  pol.n<- over(coords2, shape,fn=NULL)
+  matrix(pol.n[,1],ncol=1)
+}
