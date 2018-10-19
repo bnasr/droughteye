@@ -3,6 +3,8 @@ library(raster)
 
 shinyServer(function(input, output, session) {
   
+  rv <- reactiveValues()
+  
   monthid <- reactive({
     which(input$month ==month.name)
   })
@@ -89,13 +91,13 @@ shinyServer(function(input, output, session) {
   })
   
   
-  output$map <- renderPlot(
-    height = function(){floor(session$clientData$output_map_width/1.75)}, {
+  output$map_plot <- renderPlot(
+    height = function(){floor(session$clientData$output_map_plot_width/1.75)}, {
       
       path <- map_path()
       if(is.null(path)) return()
       
-      map <- raster(path)
+      map_raster <- raster(path)
       
       colList <- switch(input$colorpal,
                         'Default' = colList.Contad,
@@ -105,7 +107,7 @@ shinyServer(function(input, output, session) {
       
       col <- colorRampPalette(colList)(100)
       
-      r <- setRange(map)
+      r <- setRange(map_raster)
       
       par(mar=c(6,6,4,1), bty='n', xpd = TRUE)
       par(bg = 'blue')
@@ -144,7 +146,7 @@ shinyServer(function(input, output, session) {
   
   physio <- reactive(
     raster::shapefile(paste0(data_repo, 'physio/physio.shp'))
-    )
+  )
   
   
   output$physio_plot <- renderPlot(
@@ -205,6 +207,7 @@ shinyServer(function(input, output, session) {
     }
   ) 
   
+  
   output$hovervalues <- renderUI({
     hover1 <- input$map_hover
     hover2 <- input$physio_hover
@@ -225,6 +228,71 @@ shinyServer(function(input, output, session) {
   })
   
   
+  output$zonal_plot <- renderPlot(
+    height = function(){floor(session$clientData$output_zonal_plot_width/2.5)}, {
+      if(input$update_zonal==0) return()
+      path <- map_path()
+      if(is.null(path)) return()
+      
+      map_raster <- raster(path)
+      phys <- physio()
+      if(rv$update_zonal_now&!rv$zonal_up_to_date) {
+        showModal(strong(
+          modalDialog("Please wait for zonal stats ...",
+                      easyClose = F,
+                      fade = T,
+                      size = 's',
+                      style='background-color:#3b3a35; color:#fce319; ',
+                      footer = NULL
+          )))
+        # rv$zonal_stats <- raster::extract(map_raster, physio(), quantile, na.rm = T, probs = c(0.025, 0.25, 0.5, 0.75, 0.975))
+        rv$zonal_stats <- raster::extract(map_raster, phys)
+        names(rv$zonal_stats) <- tools::toTitleCase(tolower(phys$PROVINCE))
+        rv$zonal_up_to_date <- TRUE
+        removeModal()
+        
+      }
+      q <- rv$zonal_stats
+      q['NA'] <- NULL
+      
+      labs <- names(q)
+      quants <- sapply(q, quantile, na.rm = TRUE, probs = c(0.025, 0.25, 0.5, 0.75, 0.975))
+      ord <- order(quants[3,])
+      n <- length(q)
+      colList <- rainbow(n)
+      
+      bp <- boxplot(q[ord], bty = 'n', outline = FALSE, col= colList[ord], axes = F)
+      axis(2, cex.axis = 1.5, line = -1)
+      mtext(plot_title(), font=2, line = 1, cex = 3)
+      mtext('°C', font=2, line = 2, cex = 2, side = 2)
+      text((1:n)-0.15, bp$stats[4,], labs, srt = 90, adj = 0, cex = 1.2, font = 2)
+      
+      })
+  
+  
+  observe({
+    req(input$year)
+    req(input$month)
+    req(input$mapType)
+    rv$update_zonal_now <- FALSE
+    rv$zonal_up_to_date <- FALSE
+  })
+  
+  observeEvent(input$update_zonal,{
+      rv$update_zonal_now <- TRUE
+  })
+  
+  observe(
+    {
+      if(!rv$zonal_up_to_date) 
+        updateActionButton(session, 'update_zonal', 
+                           label = HTML('<strong style="color:#ff0000;">Zonal stats are not up-to-date. Click here to update</strong>'))
+      else
+        updateActionButton(session, 'update_zonal', 
+                           label = HTML('<strong style="color:#00ff00;">Zonal stats are up-to-date!</strong>'))
+      
+    }
+  )
   # observeEvent(input$map_click)
   output$downloadmap <- downloadHandler(
     filename = function() {
