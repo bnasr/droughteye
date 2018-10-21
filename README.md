@@ -19,4 +19,4 @@ For citations, please cite both the manuscript and the interface:
 
 ### Contact us
 
-Feel free to contact us at [bijan.s.nasr@gmail.com](mailto:bijan.s.nasr@gmail.com?Subject=Drought Eye) with ideas for collaborations or suggestions for improvements.
+Feel free to contact us at [bijan.s.nasr@gmail.com](<mailto:bijan.s.nasr@gmail.com?Subject=Drought Eye>) with ideas for collaborations or suggestions for improvements.
