@@ -8,7 +8,7 @@ We quantified monthly thermal stress anomalies based on remotely sensed surface 
 
 ### Source code
 
-Drought Eye is developed and maintained by [Bijan Seyednarollah](https://bnasr.github.io). All source codes are open under [GNU AGP-3](https://www.gnu.org/licenses/agpl-3.0.en.html) license and publicly available from: [https://github.com/bnasr/droughteye](https://github.com/bnasr/droughteye).
+Drought Eye is developed and maintained by [Bijan Seyednarollah](https://bnasr.github.io). All source codes are open under [GNU AGPL-3](https://www.gnu.org/licenses/agpl-3.0.en.html) license and publicly available from: [https://github.com/bnasr/droughteye](https://github.com/bnasr/droughteye).
 
 ### Citation
 
