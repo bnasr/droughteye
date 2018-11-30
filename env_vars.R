@@ -5,3 +5,4 @@ mcd11c3_web_repo <- 'https://e4ftl01.cr.usgs.gov/MOLT/MOD11C3.006/'
 deltat_repo <- '/mnt/monsoon/datarepo/DROUGHT_EYE/DELTA_T/'
 summ_repo <- '/mnt/monsoon/datarepo/DROUGHT_EYE/SUMM/'
 
+data_repo <- '/home/bijan/Projects/droughteye/data/'
