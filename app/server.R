@@ -248,11 +248,11 @@ shinyServer(function(input, output, session) {
       titlefont = fontList
     )
     yAxis <- list(
-      title = "CC",
+      title = input$mapType,
       titlefont = fontList
     )
     
-    data <- summ_all[variable=='mean'&type==tolower(input$mapType)]
+    data <- summ_all[Ecoregion!='NA'&variable==input$temp_var&type==tolower(input$mapType)]
     
     p <- plot_ly(data = data,
                  x=~date, 
