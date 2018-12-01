@@ -69,10 +69,16 @@ fluidPage(
                                                 hover = 'map_hover')
                             ),
                             
-                            tabPanel('Temporal Variations', 
+                            tabPanel('Temporal Variation', 
+                                     
                                      br(),
+                                     radioButtons('temp_var', 
+                                                  label = NULL, 
+                                                  inline = TRUE,
+                                                  choices = c('mean', 'sd', '2.5%', '25%', '50%', '75%', '97.5%')
+                                     ),
                                      plotlyOutput('temporal_plot', 
-                                                width = '100%')
+                                                  width = '100%')
                             ),
                             
                             tabPanel('Zonal Statistics', 
