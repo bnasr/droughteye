@@ -1,6 +1,7 @@
 list.of.packages <- c(
   'rgdal',
   'shiny',
+  'plotly',
   # 'shinyjs',
   # 'shinyBS',
   # 'shinyAce',
