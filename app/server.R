@@ -297,7 +297,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$zonal_plot <- renderPlot(
-    height = function(){floor(session$clientData$output_zonal_plot_width/2.5)}, {
+    height = function(){floor(session$clientData$output_zonal_plot_width/2)}, {
 
       zonal_stats <- zonal_table()
       if(is.null(zonal_stats))return()
@@ -316,6 +316,7 @@ shinyServer(function(input, output, session) {
       mtext('°C', font=2, line = 2, cex = 2, side = 2)
       text((1:n)-0.15, bp$stats[4,], labs[ord], srt = 90, adj = -0.05, cex = 1.2, font = 2)
       abline(h = 0, lty = 2, lwd = 4, col ='#80808080')
+      mtext(plot_title(), font=2, line = 1, cex = 3)
       })
   
   
