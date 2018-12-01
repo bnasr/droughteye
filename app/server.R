@@ -5,11 +5,6 @@ shinyServer(function(input, output, session) {
   
   rv <- reactiveValues()
   
-  summ_all <- reactive({
-    summ <- readRDS(sprintf(fmt = '%sSUMM.ALL.rds', data_repo))
-    summ[,date:=as.Date(sprintf(fmt = '%04d-%02d-01', year, month))]
-    
-  })
   
   monthid <- reactive({
     which(input$month ==month.name)
@@ -240,7 +235,8 @@ shinyServer(function(input, output, session) {
     summ_all_path <- sprintf(fmt = '%sSUMM.ALL.rds', summ_repo)
     
     if(!file.exists(summ_all_path))return()
-    zonal_stats <- readRDS(summ_all_path)
+    summ_all <- readRDS(summ_all_path)
+    summ_all[,date:=as.Date(sprintf(fmt = '%04d-%02d-01', year, month))]
     
     fontList <- list(
       family = "Courier New, monospace",
@@ -256,7 +252,7 @@ shinyServer(function(input, output, session) {
       titlefont = fontList
     )
     
-    data <- zonal_stats[variable=='mean'&type==tolower(input$mapType)]
+    data <- summ_all[variable=='mean'&type==tolower(input$mapType)]
     
     p <- plot_ly(data = data,
                  x=~date, 
