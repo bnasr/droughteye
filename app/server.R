@@ -286,7 +286,8 @@ shinyServer(function(input, output, session) {
   zonal_table <- reactive({
     
     summ_path <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', 
-                         summ_repo, toupper(input$mapType),
+                         summ_repo, 
+                         toupper(input$mapType),
                          as.integer(input$year), 
                          monthid())
     
@@ -300,7 +301,13 @@ shinyServer(function(input, output, session) {
     height = function(){floor(session$clientData$output_zonal_plot_width/2)}, {
 
       zonal_stats <- zonal_table()
-      if(is.null(zonal_stats))return()
+      if(is.null(zonal_stats)){
+          par(mar=c(0,0,0,0))
+          plot(NA, xlim=c(0,1), ylim=c(0,1), xaxs='i',yaxs='i', xaxt='n', yaxt='n', bty='o', xlab='',ylab='')
+          text(mean(par()$usr[1:2]), mean(par()$usr[3:4]), 'MODIS data for the selected month have not become available yet!', font=2, adj=.5, cex=2)
+          return()
+        }
+      
       
       zonal_stats['NA'] <- NULL
       
