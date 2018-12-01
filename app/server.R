@@ -96,6 +96,7 @@ shinyServer(function(input, output, session) {
       
       path <- map_path()
       if(is.null(path)) {
+        par(mar=c(0,0,0,0))
         plot(NA, xlim=c(0,1), ylim=c(0,1), xaxs='i',yaxs='i', xaxt='n', yaxt='n', bty='o', xlab='',ylab='')
         text(mean(par()$usr[1:2]), mean(par()$usr[3:4]), 'MODIS data for the selected month have not become available yet!', font=2, adj=.5, cex=2)
         return()
