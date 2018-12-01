@@ -256,8 +256,8 @@ shinyServer(function(input, output, session) {
     
     ttl <- switch (input$mapType,
                     'Temporal' = 'Variablity of Thermal Stress for Different Ecoregions',
-                    'Normal' = 'Temporiablity of Normal Thermal Stress for Different Ecoregions',
-                    'Anomaly' = 'Temporiablity of Thermal Stress Anomaly for Different Ecoregions'
+                    'Normal' = 'Variablity of Normal Thermal Stress for Different Ecoregions',
+                    'Anomaly' = 'Variablity of Thermal Stress Anomaly for Different Ecoregions'
     )
     
     
