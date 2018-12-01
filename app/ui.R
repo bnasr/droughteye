@@ -79,7 +79,9 @@ fluidPage(
                                                   selected = 'mean'
                                      ),
                                      plotlyOutput('temporal_plot', 
-                                                  width = '100%')
+                                                  width = '100%'),
+                                     hr(),
+                                     downloadButton("downloadtemporal", "Download Data")
                             ),
                             
                             tabPanel('Zonal Statistics', 
