@@ -95,7 +95,11 @@ shinyServer(function(input, output, session) {
     height = function(){floor(session$clientData$output_map_plot_width/1.75)}, {
       
       path <- map_path()
-      if(is.null(path)) return()
+      if(is.null(path)) {
+        plot(NA, xlim=c(0,1), ylim=c(0,1), xaxs='i',yaxs='i', xaxt='n', yaxt='n', bty='o', xlab='',ylab='')
+        text(mean(par()$usr[1:2]), mean(par()$usr[3:4]), 'MODIS data for the selected month have not become available yet!', font=2, adj=.5, cex=2)
+        return()
+      }
       
       map_raster <- raster(path)
       
