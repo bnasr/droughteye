@@ -255,9 +255,7 @@ shinyServer(function(input, output, session) {
       titlefont = fontList
     )
     
-    message(colnames(zonal_stats))
-    
-    data <- zonal_stats[type==tolower(input$mapType)]
+    data <- zonal_stats[variable=='mean'&type==tolower(input$mapType)]
     
     p <- plot_ly(data = data,
                  x=~date, 
@@ -277,7 +275,9 @@ shinyServer(function(input, output, session) {
                          monthid())
     
     if(!file.exists(summ_path)) return(NULL)
+    
     tmp <- readRDS(summ_path)
+    message(colnames(tmp))
     tmp
   })
   
