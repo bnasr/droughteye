@@ -254,14 +254,21 @@ shinyServer(function(input, output, session) {
     
     data <- summ_all[Ecoregion!='NA'&variable==input$temp_var&type==tolower(input$mapType)]
     
+    ttl <- switch (input$mapType,
+                    'Temporal' = 'Variablity of Thermal Stress for Different Ecoregions',
+                    'Normal' = 'Temporiablity of Normal Thermal Stress for Different Ecoregions',
+                    'Anomaly' = 'Temporiablity of Thermal Stress Anomaly for Different Ecoregions'
+    )
+    
+    
     p <- plot_ly(data = data,
                  x=~date, 
                  y= ~value,
                  visible = "legendonly",
                  color = ~Ecoregion, 
-                 type = 'scatter', 
+                 type = 'scatter',
                  mode = 'lines+markers') %>%
-      layout(xaxis = xAxis, yaxis = yAxis)
+      layout(xaxis = xAxis, yaxis = yAxis, title = ttl)
     
     return(p)
   })
