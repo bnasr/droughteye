@@ -75,7 +75,8 @@ fluidPage(
                                      radioButtons('temp_var', 
                                                   label = NULL, 
                                                   inline = TRUE,
-                                                  choices = c('mean', 'sd', '2.5%', '25%', '50%', '75%', '97.5%')
+                                                  choices = c('mean', 'sd', '2.5%', '25%', '50%', '75%', '97.5%'), 
+                                                  selected = 'mean'
                                      ),
                                      plotlyOutput('temporal_plot', 
                                                   width = '100%')
