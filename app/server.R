@@ -19,7 +19,7 @@ shinyServer(function(input, output, session) {
     
     y <- as.numeric(input$year)
     m <- monthid()
-    
+    print(path)
     path <- sprintf(fmt = '%sANOMALY/DELTAT.ANOMALY.%04d.%02d.01.tif', deltat_repo, y, m)
     
     if(file.exists(path)) return(path)
