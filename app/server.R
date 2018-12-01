@@ -230,12 +230,17 @@ shinyServer(function(input, output, session) {
     HTML(sprintf('<p> Longitude: %.3f<br/>Latitude: %.3f<br/>Region: %s</p>', hover$x, hover$y, province))
   })
   
+  summ_all_path <- reactive({
+    summ_all_path <- sprintf(fmt = '%sSUMM.ALL.rds', summ_repo)
+    if(!file.exists(summ_all_path))return(NULL)
+    summ_all_path
+  })
   output$temporal_plot <- renderPlotly({
 
-    summ_all_path <- sprintf(fmt = '%sSUMM.ALL.rds', summ_repo)
+    tmp <- summ_all_path()
+    if(is.null(tmp))return()
     
-    if(!file.exists(summ_all_path))return()
-    summ_all <- readRDS(summ_all_path)
+    summ_all <- readRDS(tmp)
     summ_all[,date:=as.Date(sprintf(fmt = '%04d-%02d-01', year, month))]
     
     fontList <- list(
@@ -343,6 +348,18 @@ shinyServer(function(input, output, session) {
       path <- map_path()
       if(is.null(path)) return()
       file.copy(path, to = file)
+    }
+  )
+  
+  output$downloadtemporal <- downloadHandler(
+    filename = function() {
+      return(sprintf(fmt = 'summary_thermal_stress_anomaly_by_%04d_%02d.01.csv', as.integer(input$year), monthid()))
+    },
+    content = function(file) {
+      path <- summ_all_path()
+      if(is.null(path)) return()
+      zonal <- readRDS(path)
+      write.table(zonal, file = file, row.names = FALSE)
     }
   )
 })
