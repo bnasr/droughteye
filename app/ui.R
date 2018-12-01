@@ -69,6 +69,12 @@ fluidPage(
                                                 hover = 'map_hover')
                             ),
                             
+                            tabPanel('Temporal Variations', 
+                                     br(),
+                                     plotlyOutput('temporal_plot', 
+                                                width = '100%')
+                            ),
+                            
                             tabPanel('Zonal Statistics', 
                                      br(),
                                      plotOutput('zonal_plot', 
