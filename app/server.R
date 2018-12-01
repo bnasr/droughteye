@@ -5,6 +5,12 @@ shinyServer(function(input, output, session) {
   
   rv <- reactiveValues()
   
+  summ_all <- reactive({
+    summ <- readRDS(sprintf(fmt = '%sSUMM.ALL.rds', data_repo))
+    summ[,date:=as.Date(sprintf(fmt = '%04d-%02d-01', year, month))]
+    
+  })
+  
   monthid <- reactive({
     which(input$month ==month.name)
   })
@@ -233,29 +239,16 @@ shinyServer(function(input, output, session) {
   
   output$zonal_plot <- renderPlot(
     height = function(){floor(session$clientData$output_zonal_plot_width/2.5)}, {
-      if(input$update_zonal==0) return()
-      path <- map_path()
-      if(is.null(path)) return()
+
+      summ_path <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', 
+                           summ_repo, toupper(input$mapType),
+                           as.numeric(input$year), 
+                           as.numeric(input$month))
       
-      map_raster <- raster(path)
-      phys <- physio()
-      if(rv$update_zonal_now&!rv$zonal_up_to_date) {
-        showModal(strong(
-          modalDialog("Please wait for zonal stats ...",
-                      easyClose = F,
-                      fade = T,
-                      size = 's',
-                      style='background-color:#3b3a35; color:#fce319; ',
-                      footer = NULL
-          )))
-        # rv$zonal_stats <- raster::extract(map_raster, physio(), quantile, na.rm = T, probs = c(0.025, 0.25, 0.5, 0.75, 0.975))
-        rv$zonal_stats <- raster::extract(map_raster, phys)
-        names(rv$zonal_stats) <- tools::toTitleCase(tolower(phys$PROVINCE))
-        rv$zonal_up_to_date <- TRUE
-        rv$zonal_ttl <- plot_title()
-        removeModal()
-        
-      }
+      if(!file.exists(summ_path))return()
+      rv$zonal_stats <- readRDS(summ_path)
+      
+
       q <- rv$zonal_stats
       q['NA'] <- NULL
       
@@ -274,29 +267,29 @@ shinyServer(function(input, output, session) {
       })
   
   
-  observe({
-    req(input$year)
-    req(input$month)
-    req(input$mapType)
-    rv$update_zonal_now <- FALSE
-    rv$zonal_up_to_date <- FALSE
-  })
-  
-  observeEvent(input$update_zonal,{
-      rv$update_zonal_now <- TRUE
-  })
-  
-  observe(
-    {
-      if(!rv$zonal_up_to_date) 
-        updateActionButton(session, 'update_zonal', 
-                           label = HTML('<strong style="color:#ff0000;">Zonal stats are not up-to-date. Click here to update</strong>'))
-      else
-        updateActionButton(session, 'update_zonal', 
-                           label = HTML('<strong style="color:#00ff00;">Zonal stats are up-to-date!</strong>'))
-      
-    }
-  )
+  # observe({
+  #   req(input$year)
+  #   req(input$month)
+  #   req(input$mapType)
+  #   rv$update_zonal_now <- FALSE
+  #   rv$zonal_up_to_date <- FALSE
+  # })
+  # 
+  # observeEvent(input$update_zonal,{
+  #     rv$update_zonal_now <- TRUE
+  # })
+  # 
+  # observe(
+  #   {
+  #     if(!rv$zonal_up_to_date) 
+  #       updateActionButton(session, 'update_zonal', 
+  #                          label = HTML('<strong style="color:#ff0000;">Zonal stats are not up-to-date. Click here to update</strong>'))
+  #     else
+  #       updateActionButton(session, 'update_zonal', 
+  #                          label = HTML('<strong style="color:#00ff00;">Zonal stats are up-to-date!</strong>'))
+  #     
+  #   }
+  # )
   # observeEvent(input$map_click)
   output$downloadmap <- downloadHandler(
     filename = function() {

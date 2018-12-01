@@ -71,9 +71,9 @@ fluidPage(
                             
                             tabPanel('Zonal Statistics', 
                                      br(),
-                                     actionButton('update_zonal', 
-                                                  label = HTML('<strong style="color:#ff0000;">Zonal stats are not up-to-date. Click here to update</strong>'),
-                                                  icon = icon('redo'), width = '100%'),
+                                     # actionButton('update_zonal', 
+                                     #              label = HTML('<strong style="color:#ff0000;">Zonal stats are not up-to-date. Click here to update</strong>'),
+                                     #              icon = icon('redo'), width = '100%'),
                                      hr(),
                                      plotOutput('zonal_plot', 
                                                 width = '100%')
