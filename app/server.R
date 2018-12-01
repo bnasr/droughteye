@@ -285,7 +285,7 @@ shinyServer(function(input, output, session) {
     height = function(){floor(session$clientData$output_zonal_plot_width/2.5)}, {
 
       zonal_stats <- zonal_table()
-      
+      message(colnames(zonal_stats)) 
       if(is.null(zonal_stats))return()
       
 
