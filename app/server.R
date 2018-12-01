@@ -253,7 +253,7 @@ shinyServer(function(input, output, session) {
     )
     
     data <- summ_all[Ecoregion!='NA'&variable==input$temp_var&type==tolower(input$mapType)]
-    
+    if(input$mapType=='Normal') data <- data[year==2001]
     ttl <- switch (input$mapType,
                     'Temporal' = 'Variablity of Thermal Stress for Different Ecoregions',
                     'Normal' = 'Variablity of Normal Thermal Stress for Different Ecoregions',
