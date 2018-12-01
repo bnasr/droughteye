@@ -242,8 +242,8 @@ shinyServer(function(input, output, session) {
 
       summ_path <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', 
                            summ_repo, toupper(input$mapType),
-                           as.numeric(input$year), 
-                           as.numeric(input$month))
+                           as.integer(input$year), 
+                           as.integer(input$month))
       
       if(!file.exists(summ_path))return()
       rv$zonal_stats <- readRDS(summ_path)
