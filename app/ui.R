@@ -79,6 +79,7 @@ fluidPage(
                                                   selected = 'mean'
                                      ),
                                      plotlyOutput('temporal_plot', 
+                                                  height = '500px',
                                                   width = '100%'),
                                      hr(),
                                      downloadButton("downloadtemporal", "Download Data")
