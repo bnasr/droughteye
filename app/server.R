@@ -353,7 +353,7 @@ shinyServer(function(input, output, session) {
   
   output$downloadtemporal <- downloadHandler(
     filename = function() {
-      return(sprintf(fmt = 'summary_thermal_stress_anomaly_by_%04d_%02d.01.csv', as.integer(input$year), monthid()))
+      return(sprintf(fmt = 'summary_thermal_stress_anomaly_by_%s.csv', Sys.Date()))
     },
     content = function(file) {
       path <- summ_all_path()
