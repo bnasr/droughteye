@@ -20,7 +20,6 @@ shinyServer(function(input, output, session) {
     y <- as.numeric(input$year)
     m <- monthid()
     path <- sprintf(fmt = '%sANOMALY/DELTAT.ANOMALY.%04d.%02d.01.tif', deltat_repo, y, m)
-    print(path)
     
     if(file.exists(path)) return(path)
     
@@ -237,9 +236,11 @@ shinyServer(function(input, output, session) {
   })
   
   output$temporal_plot <- renderPlotly({
-    zonal_stats <- zonal_table()
+
+    summ_all_path <- sprintf(fmt = '%sSUMM.ALL.rds', summ_repo)
     
-    if(is.null(zonal_stats))return()
+    if(!file.exists(summ_all_path))return()
+    zonal_stats <- readRDS(summ_all_path)
     
     fontList <- list(
       family = "Courier New, monospace",
@@ -264,6 +265,7 @@ shinyServer(function(input, output, session) {
                  type = 'scatter', 
                  mode = 'lines+markers') %>%
       layout(xaxis = xAxis, yaxis = yAxis)
+    
     return(p)
   })
   
@@ -277,7 +279,6 @@ shinyServer(function(input, output, session) {
     if(!file.exists(summ_path)) return(NULL)
     
     tmp <- readRDS(summ_path)
-    message(colnames(tmp))
     tmp
   })
   
@@ -285,7 +286,6 @@ shinyServer(function(input, output, session) {
     height = function(){floor(session$clientData$output_zonal_plot_width/2.5)}, {
 
       zonal_stats <- zonal_table()
-      message(colnames(zonal_stats)) 
       if(is.null(zonal_stats))return()
       
 
