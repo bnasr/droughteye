@@ -254,9 +254,10 @@ shinyServer(function(input, output, session) {
       title = "CC",
       titlefont = fontList
     )
+    
     message(colnames(zonal_stats))
     
-    data <- zonal_stats[variable=='mean'&type==tolower(input$mapType)]
+    data <- zonal_stats[type==tolower(input$mapType)]
     
     p <- plot_ly(data = data,
                  x=~date, 
