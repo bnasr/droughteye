@@ -292,6 +292,7 @@ shinyServer(function(input, output, session) {
       zonal_stats <- zonal_table()
       if(is.null(zonal_stats))return()
       
+      zonal_stats <- zonal_stats[type==tolower(input$mapType)]
 
       zonal_stats['NA'] <- NULL
       
