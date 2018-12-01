@@ -236,29 +236,66 @@ shinyServer(function(input, output, session) {
     HTML(sprintf('<p> Longitude: %.3f<br/>Latitude: %.3f<br/>Region: %s</p>', hover$x, hover$y, province))
   })
   
+  output$temporal_plot <- renderPlotly({
+    zonal_stats <- zonal_table()
+    
+    if(is.null(zonal_stats))return()
+    
+    fontList <- list(
+      family = "Courier New, monospace",
+      size = 16,
+      color = "#7f7f7f"
+    )
+    xAxis <- list(
+      title = "Time",
+      titlefont = fontList
+    )
+    yAxis <- list(
+      title = "CC",
+      titlefont = fontList
+    )
+    
+    data <- zonal_stats[variable=='mean'&type==tolower(input$mapType)]
+    
+    p <- plot_ly(data = data,
+                 x=~date, 
+                 y= ~value,
+                 color = ~Ecoregion, 
+                 type = 'scatter', 
+                 mode = 'lines+markers') %>%
+      layout(xaxis = xAxis, yaxis = yAxis)
+    return(p)
+  })
+  
+  zonal_table <- reactive({
+    
+    summ_path <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', 
+                         summ_repo, toupper(input$mapType),
+                         as.integer(input$year), 
+                         monthid())
+    
+    if(!file.exists(summ_path)) return(NULL)
+    tmp <- readRDS(summ_path)
+    tmp
+  })
   
   output$zonal_plot <- renderPlot(
     height = function(){floor(session$clientData$output_zonal_plot_width/2.5)}, {
 
-      summ_path <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', 
-                           summ_repo, toupper(input$mapType),
-                           as.integer(input$year), 
-                           monthid())
+      zonal_stats <- zonal_table()
       
-      if(!file.exists(summ_path))return()
-      rv$zonal_stats <- readRDS(summ_path)
+      if(is.null(zonal_stats))return()
       
 
-      q <- rv$zonal_stats
-      q['NA'] <- NULL
+      zonal_stats['NA'] <- NULL
       
-      labs <- names(q)
-      quants <- sapply(q, quantile, na.rm = TRUE, probs = c(0.025, 0.25, 0.5, 0.75, 0.975))
+      labs <- names(zonal_stats)
+      quants <- sapply(zonal_stats, quantile, na.rm = TRUE, probs = c(0.025, 0.25, 0.5, 0.75, 0.975))
       ord <- order(quants[3,])
-      n <- length(q)
+      n <- length(zonal_stats)
       colList <- rainbow(n)
       
-      bp <- boxplot(q[ord], bty = 'n', outline = FALSE, col= colList[ord], axes = F)
+      bp <- boxplot(zonal_stats[ord], bty = 'n', outline = FALSE, col= colList[ord], axes = F)
       axis(2, cex.axis = 1.5, line = -1)
       mtext(rv$zonal_ttl, font=2, line = 1, cex = 3)
       mtext('°C', font=2, line = 2, cex = 2, side = 2)
