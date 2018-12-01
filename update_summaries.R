@@ -40,7 +40,7 @@ for(y in 2001:this_year){
       qmean <- sapply(zonal_stats, mean, na.rm = TRUE)
       
       quantDT <- data.table(year = y, month = m, type = type, Ecoregion = rownames(quant), mean = qmean, sd = qsd, quant)
-      quantDT <- melt(quantDT, id.vars = 1:3)
+      quantDT <- melt(quantDT, id.vars = 1:4)
       
       summDT <- rbind(summDT, quantDT)
     }
