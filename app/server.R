@@ -257,6 +257,7 @@ shinyServer(function(input, output, session) {
     p <- plot_ly(data = data,
                  x=~date, 
                  y= ~value,
+                 visible = "legendonly",
                  color = ~Ecoregion, 
                  type = 'scatter', 
                  mode = 'lines+markers') %>%
