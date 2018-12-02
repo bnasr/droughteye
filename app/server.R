@@ -268,7 +268,7 @@ shinyServer(function(input, output, session) {
       data_corrected <- data[year==2001]
       data_corrected[,date:=factor(month.abb[month], levels = month.abb)]
     }else{
-      data_corrected <- data
+      data_corrected <- data[month%in%which(month.name%in%input$temp_month)]
     }
     
     ttl <- switch (input$mapType,

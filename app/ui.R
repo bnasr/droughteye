@@ -72,6 +72,10 @@ fluidPage(
                             tabPanel('Temporal Variation', 
                                      
                                      br(),
+                                     checkboxGroupInput('temp_month', 
+                                                        label = NULL,
+                                                        choices = month.name,
+                                                        selected = month.name),
                                      # radioButtons('temp_var', 
                                      #              label = NULL, 
                                      #              inline = TRUE,
