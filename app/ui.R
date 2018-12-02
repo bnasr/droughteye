@@ -51,8 +51,8 @@ fluidPage(
                           tabsetPanel(
                             
                             tabPanel('Thermal Stress Map',
-                                     
-                                     br(),
+                                     downloadButton("downloadmap", "Download Raster"),
+                                     hr(),
                                      radioButtons('month', 
                                                   label = NULL, 
                                                   inline = TRUE,
@@ -64,10 +64,7 @@ fluidPage(
                                                 width = '100%', 
                                                 click = 'map_click', 
                                                 dblclick = 'map_dblclick', 
-                                                hover = 'map_hover'),
-                                     hr(),
-                                     downloadButton("downloadmap", "Download Raster")
-                                     
+                                                hover = 'map_hover')
                             ),
                             
                             tabPanel('Temporal Variation', 
