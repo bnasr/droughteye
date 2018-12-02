@@ -51,6 +51,7 @@ fluidPage(
                           tabsetPanel(
                             
                             tabPanel('Thermal Stress Map',
+                                     br(),
                                      downloadButton("downloadmap", "Download Raster"),
                                      hr(),
                                      radioButtons('month', 
@@ -70,6 +71,9 @@ fluidPage(
                             tabPanel('Temporal Variation', 
                                      
                                      br(),
+                                     downloadButton("downloadtemporal", "Download Data"),
+                                     hr(),
+                                     
                                      checkboxGroupInput('temp_month', 
                                                         label = NULL,
                                                         choices = month.name,
@@ -83,9 +87,7 @@ fluidPage(
                                      # ),
                                      plotlyOutput('temporal_plot', 
                                                   height = '500px',
-                                                  width = '100%'),
-                                     hr(),
-                                     downloadButton("downloadtemporal", "Download Data")
+                                                  width = '100%')
                             ),
                             
                             tabPanel('Zonal Statistics', 
