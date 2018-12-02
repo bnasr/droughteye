@@ -92,6 +92,8 @@ fluidPage(
                             
                             tabPanel('Zonal Statistics', 
                                      br(),
+                                     downloadButton("downloadzonal", "Download Data"),
+                                     hr(),
                                      plotOutput('zonal_plot', 
                                                 width = '100%')
                             ),

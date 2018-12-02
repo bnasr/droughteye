@@ -242,7 +242,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$temporal_plot <- renderPlotly({
-
+    
     tmp <- summ_all_path()
     if(is.null(tmp))return()
     
@@ -272,9 +272,9 @@ shinyServer(function(input, output, session) {
     }
     
     ttl <- switch (input$mapType,
-                    'Temporal' = 'Variablity of Thermal Stress by Ecoregion',
-                    'Normal' = 'Variablity of Normal Thermal Stress by Ecoregion',
-                    'Anomaly' = 'Variablity of Thermal Stress Anomaly by Ecoregion'
+                   'Temporal' = 'Variablity of Thermal Stress by Ecoregion',
+                   'Normal' = 'Variablity of Normal Thermal Stress by Ecoregion',
+                   'Anomaly' = 'Variablity of Thermal Stress Anomaly by Ecoregion'
     )
     
     
@@ -290,15 +290,23 @@ shinyServer(function(input, output, session) {
     return(p)
   })
   
+  zonal_path <- reactive({
+    tmp <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', 
+                       summ_repo, 
+                       toupper(input$mapType),
+                       as.integer(input$year), 
+                       monthid())
+    
+    if(!file.exists(tmp)) return(NULL)
+    tmp
+  }
+  )
+  
   zonal_table <- reactive({
     
-    summ_path <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', 
-                         summ_repo, 
-                         toupper(input$mapType),
-                         as.integer(input$year), 
-                         monthid())
+    summ_path <- zonal_path()
     
-    if(!file.exists(summ_path)) return(NULL)
+    if(is.null(summ_path)) return(NULL)
     
     tmp <- readRDS(summ_path)
     tmp
@@ -306,14 +314,14 @@ shinyServer(function(input, output, session) {
   
   output$zonal_plot <- renderPlot(
     height = function(){floor(session$clientData$output_zonal_plot_width/2)}, {
-
+      
       zonal_stats <- zonal_table()
       if(is.null(zonal_stats)){
-          par(mar=c(0,0,0,0))
-          plot(NA, xlim=c(0,1), ylim=c(0,1), xaxs='i',yaxs='i', xaxt='n', yaxt='n', bty='o', xlab='',ylab='')
-          text(mean(par()$usr[1:2]), mean(par()$usr[3:4]), 'MODIS data for the selected month have not become available yet!', font=2, adj=.5, cex=2)
-          return()
-        }
+        par(mar=c(0,0,0,0))
+        plot(NA, xlim=c(0,1), ylim=c(0,1), xaxs='i',yaxs='i', xaxt='n', yaxt='n', bty='o', xlab='',ylab='')
+        text(mean(par()$usr[1:2]), mean(par()$usr[3:4]), 'MODIS data for the selected month have not become available yet!', font=2, adj=.5, cex=2)
+        return()
+      }
       
       
       zonal_stats['NA'] <- NULL
@@ -331,7 +339,7 @@ shinyServer(function(input, output, session) {
       text((1:n)-0.15, bp$stats[4,], labs[ord], srt = 90, adj = -0.05, cex = 1.2, font = 2)
       abline(h = 0, lty = 2, lwd = 4, col ='#80808080')
       mtext(plot_title(), font=2, line = 1, cex = 3)
-      })
+    })
   
   
   # observe({
@@ -371,13 +379,27 @@ shinyServer(function(input, output, session) {
   
   output$downloadtemporal <- downloadHandler(
     filename = function() {
-      return(sprintf(fmt = 'summary_thermal_stress_anomaly_by_%s.csv', Sys.Date()))
+      return(sprintf(fmt = 'summary_thermal_stress_by_%s.csv', Sys.Date()))
     },
     content = function(file) {
       path <- summ_all_path()
       if(is.null(path)) return()
       zonal <- readRDS(path)
       write.table(zonal, file = file, row.names = FALSE)
+    }
+  )
+  
+  output$downloadzonal <- downloadHandler(
+    filename = function() {
+      return(sprintf(fmt = 'summary_thermal_stress_%s_%04s_%02d-01.rds',
+                     tolower(input$mapType),
+                     as.integer(input$year),
+                     monthid()))
+    },
+    content = function(file) {
+      path <- zonal_path()
+      if(is.null(path))return()
+      path
     }
   )
 })
