@@ -19,7 +19,7 @@ for(y in 2001:this_year){
     for(type in c('temporal', 'normal', 'anomaly')){
       cat('getting summaries for', type, y, m, '\n')
       path <- switch (type,
-                      'temporal' = sprintf(fmt = '%sDELTA/DELTAT.TEMPORAL.%04d.%02d.01.tif', deltat_repo, y, m),
+                      'temporal' = sprintf(fmt = '%sTEMPORAL/DELTAT.TEMPORAL.%04d.%02d.01.tif', deltat_repo, y, m),
                       'normal' = sprintf(fmt = '%sNORMAL/DELTAT.NORMAL.%02d.01.tif', deltat_repo, m),
                       'anomaly' = sprintf(fmt = '%sANOMALY/DELTAT.ANOMALY.%04d.%02d.01.tif', deltat_repo, y, m)
       )
