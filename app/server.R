@@ -240,13 +240,14 @@ shinyServer(function(input, output, session) {
     if(!file.exists(summ_all_path))return(NULL)
     summ_all_path
   })
+  
   output$temporal_plot <- renderPlotly({
 
     tmp <- summ_all_path()
     if(is.null(tmp))return()
     
     summ_all <- readRDS(tmp)
-    summ_all[,date:=as.Date(sprintf(fmt = '%04d-%02d-01', year, month))]
+    # summ_all[,date:=as.Date(sprintf(fmt = '%04d-%02d-01', year, month))]
     
     fontList <- list(
       family = "Courier New, monospace",
@@ -263,7 +264,12 @@ shinyServer(function(input, output, session) {
     )
     
     data <- summ_all[Ecoregion!='NA'&variable==input$temp_var&type==tolower(input$mapType)]
-    if(input$mapType=='Normal') data <- data[year==2001]
+    
+    if(input$mapType=='Normal') {
+      data <- data[year==2001]
+      data[,date:=month]
+    }
+    
     ttl <- switch (input$mapType,
                     'Temporal' = 'Variablity of Thermal Stress for Different Ecoregions',
                     'Normal' = 'Variablity of Normal Thermal Stress for Different Ecoregions',
