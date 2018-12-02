@@ -267,7 +267,8 @@ shinyServer(function(input, output, session) {
     
     if(input$mapType=='Normal') {
       data <- data[year==2001]
-      data[,date:=month.abb[month]]
+      data[,date:=factor(month.abb[month], levels = month.abb)]
+      
     }
     
     ttl <- switch (input$mapType,
