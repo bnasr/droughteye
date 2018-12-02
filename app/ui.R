@@ -43,10 +43,8 @@ fluidPage(
                               selected = 'Physiographic Regions'),
                  
                  hr(),
-                 uiOutput("hovervalues"),
+                 uiOutput("hovervalues")
                  
-                 hr(),
-                 downloadButton("downloadmap", "Download Raster")
     ),
     
     mainPanel = mainPanel(width = 10,
@@ -66,7 +64,10 @@ fluidPage(
                                                 width = '100%', 
                                                 click = 'map_click', 
                                                 dblclick = 'map_dblclick', 
-                                                hover = 'map_hover')
+                                                hover = 'map_hover'),
+                                     hr(),
+                                     downloadButton("downloadmap", "Download Raster")
+                                     
                             ),
                             
                             tabPanel('Temporal Variation', 
