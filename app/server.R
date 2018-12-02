@@ -399,7 +399,7 @@ shinyServer(function(input, output, session) {
     content = function(file) {
       path <- zonal_path()
       if(is.null(path))return()
-      file <- path
+      file.copy(path, file)
     }
   )
 })
