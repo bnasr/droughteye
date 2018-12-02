@@ -36,7 +36,7 @@ for(y in 2001:this_year){
         cat(summ_path, ' already exists!\n')
       
       }else{
-        cat(summ_path, ' creating ...')
+        cat('creating', summ_path,  '...\n')
         map_raster <- raster(path)
         zonal_stats <- raster::extract(map_raster, phys)
         names(zonal_stats) <- tools::toTitleCase(tolower(phys$PROVINCE))
