@@ -247,7 +247,6 @@ shinyServer(function(input, output, session) {
     if(is.null(tmp))return()
     
     summ_all <- readRDS(tmp)
-    # summ_all[,date:=as.Date(sprintf(fmt = '%04d-%02d-01', year, month))]
     
     fontList <- list(
       family = "Courier New, monospace",

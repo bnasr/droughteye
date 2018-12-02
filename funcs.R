@@ -57,9 +57,9 @@ get_MOD11C3 <- function(year, month, modis_repo){
 }
 
 # read modis and prism and write detla T
-write_detla_t <- function(y, m, deltat_repo){
+write_detla_t_temporal <- function(y, m, deltat_repo){
   
-  delta_path <- sprintf(fmt = '%sDELTA/DELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
+  delta_path <- sprintf(fmt = '%sTEMPORAL/DELTAT.TEMPORAL.%04d.%02d.01.tif', deltat_repo, y, m)
   
   if(file.exists(delta_path)){
     cat(delta_path, ' already exists!\n')
@@ -118,7 +118,7 @@ write_detla_t_normal <- function(m, deltat_repo){
   
   y <- 2001:2012
   
-  delta_path <- sprintf(fmt = '%sDELTA/DELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
+  delta_path <- sprintf(fmt = '%sTEMPORAL/DELTAT.TEMPORAL.%04d.%02d.01.tif', deltat_repo, y, m)
   
   delta_t <- lapply(delta_path, raster)
   
@@ -143,8 +143,8 @@ write_detla_t_anomaly <- function(y, m, deltat_repo){
     cat(delta_anomaly_path, ' already exists!\n')
     return(delta_anomaly_path)
   }
-  
-  delta_path <- sprintf(fmt = '%sDELTA/DELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
+
+  delta_path <- sprintf(fmt = '%sTEMPORAL/DELTAT.TEMPORAL.%04d.%02d.01.tif', deltat_repo, y, m)
   
   if(!file.exists(delta_path))
     stop(paste(delta_path, 'not found!'))
