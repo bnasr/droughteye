@@ -92,7 +92,7 @@ shinyServer(function(input, output, session) {
   
   
   output$map_plot <- renderPlot(
-    height = function(){floor(session$clientData$output_map_plot_width/1.75)}, {
+    height = function(){floor(session$clientData$output_map_plot_width/1.5)}, {
       
       path <- map_path()
       if(is.null(path)) {
