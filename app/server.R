@@ -262,7 +262,7 @@ shinyServer(function(input, output, session) {
       titlefont = fontList
     )
     
-    data <- summ_all[Ecoregion!='NA'&variable==input$temp_var&type==tolower(input$mapType)]
+    data <- summ_all[Ecoregion!='NA'&variable=='50%'&type==tolower(input$mapType)]
     
     if(input$mapType=='Normal') {
       data_corrected <- data[year==2001]

@@ -72,12 +72,12 @@ fluidPage(
                             tabPanel('Temporal Variation', 
                                      
                                      br(),
-                                     radioButtons('temp_var', 
-                                                  label = NULL, 
-                                                  inline = TRUE,
-                                                  choices = c('mean', 'sd', '2.5%', '25%', '50%', '75%', '97.5%'), 
-                                                  selected = 'mean'
-                                     ),
+                                     # radioButtons('temp_var', 
+                                     #              label = NULL, 
+                                     #              inline = TRUE,
+                                     #              choices = c('mean', 'sd', '2.5%', '25%', '50%', '75%', '97.5%'), 
+                                     #              selected = 'mean'
+                                     # ),
                                      plotlyOutput('temporal_plot', 
                                                   height = '500px',
                                                   width = '100%'),
