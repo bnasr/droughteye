@@ -23,6 +23,7 @@ for(y in 2001:this_year){
                       'normal' = sprintf(fmt = '%sNORMAL/DELTAT.NORMAL.%02d.01.tif', deltat_repo, m),
                       'anomaly' = sprintf(fmt = '%sANOMALY/DELTAT.ANOMALY.%04d.%02d.01.tif', deltat_repo, y, m)
       )
+      if(!file.exists(path)) next()
       
       summ_path <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', summ_repo, toupper(type), y, m)
       
