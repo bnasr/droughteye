@@ -266,9 +266,10 @@ shinyServer(function(input, output, session) {
     data <- summ_all[Ecoregion!='NA'&variable==input$temp_var&type==tolower(input$mapType)]
     
     if(input$mapType=='Normal') {
-      data <- data[year==2001]
-      data[,date:=factor(month.abb[month], levels = month.abb)]
-      
+      data_corrected <- data[year==2001]
+      data_corrected[,date:=factor(month.abb[month], levels = month.abb)]
+    }else{
+      data_corrected <- data
     }
     
     ttl <- switch (input$mapType,
@@ -278,7 +279,7 @@ shinyServer(function(input, output, session) {
     )
     
     
-    p <- plot_ly(data = data,
+    p <- plot_ly(data = data_corrected,
                  x=~date, 
                  y= ~value,
                  visible = "legendonly",
