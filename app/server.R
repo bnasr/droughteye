@@ -158,7 +158,7 @@ shinyServer(function(input, output, session) {
   
   
   output$physio_plot <- renderPlot(
-    height = function(){floor(session$clientData$output_physio_plot_width/1.7)}, {
+    height = function(){floor(session$clientData$output_physio_plot_width/1.5)}, {
       provs <- physio()
       
       n <- length(provs$PROVINCE)
