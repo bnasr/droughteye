@@ -30,7 +30,9 @@ for(y in 2001:this_year){
       if(file.exists(summ_path)){
         zonal_stats <- readRDS(summ_path)
         cat(summ_path, ' already exists!\n')
+      
       }else{
+        cat(summ_path, ' creating ...')
         map_raster <- raster(path)
         zonal_stats <- raster::extract(map_raster, phys)
         names(zonal_stats) <- tools::toTitleCase(tolower(phys$PROVINCE))
