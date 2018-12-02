@@ -22,13 +22,13 @@ shinyServer(function(input, output, session) {
     
   })
   
-  delta_path <- reactive({
+  delta_temporal_path <- reactive({
     
     y <- as.numeric(input$year)
     
     m <- monthid()
     
-    path <- sprintf(fmt = '%sDELTA/DELTAT.%04d.%02d.01.tif', deltat_repo, y, m)
+    path <- sprintf(fmt = '%sTEMPORAL/DELTAT.TEMPORAL.%04d.%02d.01.tif', deltat_repo, y, m)
     
     if(file.exists(path)) return(path)
     
@@ -85,7 +85,7 @@ shinyServer(function(input, output, session) {
   map_path <- reactive({
     path <- switch(input$mapType,
                    'Normal' = delta_normal_path(),
-                   'Temporal' = delta_path(),
+                   'Temporal' = delta_temporal_path(),
                    'Anomaly' = delta_anomaly_path()
     )
   })
