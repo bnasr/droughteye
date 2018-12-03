@@ -26,7 +26,7 @@ for(y in 2001:this_year){
       if(!file.exists(path)) {
         cat(path, ' does not exist!\n')
         next()
-        }
+      }
       
       summ_path <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', summ_repo, toupper(type), y, m)
       
@@ -34,7 +34,7 @@ for(y in 2001:this_year){
       if(file.exists(summ_path)){
         zonal_stats <- readRDS(summ_path)
         cat(summ_path, ' already exists!\n')
-      
+        
       }else{
         cat('creating', summ_path,  '...\n')
         map_raster <- raster(path)

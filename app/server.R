@@ -292,10 +292,10 @@ shinyServer(function(input, output, session) {
   
   zonal_path <- reactive({
     tmp <- sprintf(fmt = '%sSUMM.%s.%04d.%02d.01.rds', 
-                       summ_repo, 
-                       toupper(input$mapType),
-                       as.integer(input$year), 
-                       monthid())
+                   summ_repo, 
+                   toupper(input$mapType),
+                   as.integer(input$year), 
+                   monthid())
     
     if(!file.exists(tmp)) return(NULL)
     tmp
@@ -385,7 +385,7 @@ shinyServer(function(input, output, session) {
       path <- summ_all_path()
       if(is.null(path)) return()
       zonal <- readRDS(path)
-      write.table(zonal, file = file, row.names = FALSE)
+      write.table(zonal, file = file, row.names = FALSE, sep = ',')
     }
   )
   
