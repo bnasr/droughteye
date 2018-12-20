@@ -71,8 +71,10 @@ fluidPage(
                             tabPanel('Temporal Variation', 
                                      
                                      br(),
-                                     downloadButton("downloadtemporal", "Download Data"),
-                                     hr(),
+                                     br(),
+                                     br(),
+                                     # downloadButton("downloadtemporal", "Download Data"),
+                                     # hr(),
                                      
                                      checkboxGroupInput('temp_month', 
                                                         label = NULL,
@@ -92,8 +94,10 @@ fluidPage(
                             
                             tabPanel('Zonal Statistics', 
                                      br(),
-                                     downloadButton("downloadzonal", "Download Data"),
-                                     hr(),
+                                     br(),
+                                     br(),
+                                     # downloadButton("downloadzonal", "Download Data"),
+                                     # hr(),
                                      plotOutput('zonal_plot', 
                                                 width = '100%')
                             ),
