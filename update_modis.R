@@ -4,7 +4,7 @@ cat(Sys.time(), '\t updating MODIS ...\n')
 
 source('required_libs.R')
 source('env_vars.R')
-source('funcs.R')
+source('app/funcs.R')
 
 
 this_month <- month(Sys.Date())

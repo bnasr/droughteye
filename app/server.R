@@ -1,4 +1,4 @@
-source('/home/bijan/Projects/droughteye/funcs.R')
+source('funcs.R')
 library(raster)
 
 shinyServer(function(input, output, session) {
@@ -98,7 +98,8 @@ shinyServer(function(input, output, session) {
       if(is.null(path)) {
         par(mar=c(0,0,0,0))
         plot(NA, xlim=c(0,1), ylim=c(0,1), xaxs='i',yaxs='i', xaxt='n', yaxt='n', bty='o', xlab='',ylab='')
-        text(mean(par()$usr[1:2]), mean(par()$usr[3:4]), 'MODIS data for the selected month have not become available yet!', font=2, adj=.5, cex=2)
+        text(mean(par()$usr[1:2]), mean(par()$usr[3:4]), 
+             'MODIS data for the selected month have not become available yet!', font=2, adj=.5, cex=2)
         return()
       }
       
@@ -127,15 +128,15 @@ shinyServer(function(input, output, session) {
              'State Borders' = map('state', add = T, lwd = 2),
              'Physiographic Regions' = plot(physio(), add = T, lwd = 2))
       
-      axis(1, line = 1, cex.axis = 2)
-      axis(2, line = 1, cex.axis = 2)
+      # axis(1, line = 1, cex.axis = 2)
+      # axis(2, line = 1, cex.axis = 2)
       
-      mtext(plot_title(), font=2, line = 1, cex = 3)
-      mtext('Longitude (°)', font = 2, line = 4, cex = 2, side =1)
-      mtext('Latitude (°)', font = 2, line = 4, cex = 2, side =2)
+      mtext(plot_title(), font=2, line = 1, cex = 2)
+      # mtext('Longitude (°)', font = 2, line = 4, cex = 2, side =1)
+      # mtext('Latitude (°)', font = 2, line = 4, cex = 2, side =2)
       
-      scalebar(d = 1000, xy = c(-122, 26),type = 'bar', below = 'kilometers', divs = 4)
-      northArrow(xb = -75, yb = 25, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
+      # scalebar(d = 1000, xy = c(-122, 26),type = 'bar', below = 'kilometers', divs = 4)
+      # northArrow(xb = -75, yb = 25, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
       insertLegend(quantile(r, probs=c(.01,.99)), col)
       
       # Arrows(-65.5, 38, -65.5, 44.5, xpd=T, lwd=2)

@@ -18,7 +18,7 @@ Drought Eye is developed and maintained by [Bijan Seyednarollah](https://bnasr.g
 
 For citations, please cite both the manuscript and the interface:
 
-1.  Seyednasrollah, B., Domec, J.C., Clark, J.S. (2018), "Spatiotemporal sensitivity of thermal stress for monitoring canopy hydrological stress in near real-time", in review.
+1.  Seyednasrollah, B., Domec, J.C., Clark, J.S. (2019), "Spatiotemporal sensitivity of thermal stress for monitoring canopy hydrological stress in near real-time", Agricultural and Forest Meteorology, Volumes 269–270, 15 May 2019, Pages 220-230, https://doi.org/10.1016/j.agrformet.2019.02.016.
 2.  Seyednasrollah, B. (2018), "Drought Eye: Monitoring thermal stress in near real-time". Zenodo. http://doi.org/10.5281/zenodo.1465286
 
 ### Contact us

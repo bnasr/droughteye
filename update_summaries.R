@@ -3,7 +3,7 @@ cat('\n\n=======================================================================
 cat(Sys.time(), '\t updating summaries ...\n')
 source('required_libs.R')
 source('env_vars.R')
-source('funcs.R')
+source('app/funcs.R')
 
 
 phys <- raster::shapefile(paste0(data_repo, 'physio/physio.shp'))

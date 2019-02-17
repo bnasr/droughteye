@@ -4,7 +4,7 @@ cat(Sys.time(), '\t updating delta_t_normal ...\n')
 
 source('required_libs.R')
 source('env_vars.R')
-source('funcs.R')
+source('app/funcs.R')
 
 for(m in 1:12){
   cat('writing deltaT normal for', m, '\n')
