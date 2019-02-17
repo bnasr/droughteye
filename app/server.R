@@ -1,4 +1,4 @@
-source('/home/bijan/Projects/droughteye/funcs.R')
+source('funcs.R')
 library(raster)
 
 shinyServer(function(input, output, session) {
@@ -137,7 +137,7 @@ shinyServer(function(input, output, session) {
       
       # scalebar(d = 1000, xy = c(-122, 26),type = 'bar', below = 'kilometers', divs = 4)
       # northArrow(xb = -75, yb = 25, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
-      # insertLegend(quantile(r, probs=c(.01,.99)), col)
+      insertLegend(quantile(r, probs=c(.01,.99)), col)
       
       # Arrows(-65.5, 38, -65.5, 44.5, xpd=T, lwd=2)
       # Arrows(-65.5, 33, -65.5, 26.5, xpd=T, lwd=2)
