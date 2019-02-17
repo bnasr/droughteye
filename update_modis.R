@@ -14,7 +14,7 @@ for(y in 2001:this_year){
   for(m in 1:12){
     if(y==this_year&m>=this_month) next()
     cat('getting MODIS for', y, m, '\n')
-    get_MOD11C3(year = y, month = m, modis_repo = modis_repo)
+    try(get_MOD11C3(year = y, month = m, modis_repo = modis_repo))
   }
 }
 
