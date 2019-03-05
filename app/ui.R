@@ -122,7 +122,7 @@ fluidPage(
                                                 hover = 'tree_percent_hover')
                             ),
                             
-                            tabPanel('About',{
+                            tabPanel('About and Citation',{
                               includeHTML('about.html')
                             })
                           )
