@@ -22,8 +22,9 @@ fluidPage(
                  selectInput('year', 
                              label = 'Year', 
                              choices = 2001:year(Sys.Date()), 
-                             selected = year(Sys.Date())),
-                 
+                             selected = 2019
+                             # selected = year(Sys.Date())
+                             ),
                  hr(),
                  
                  radioButtons('colorpal', 
@@ -58,7 +59,8 @@ fluidPage(
                                                   label = NULL, 
                                                   inline = TRUE,
                                                   choices = month.name,
-                                                  selected = month.name[max(1, month(Sys.Date())-1)]
+                                                  selected = "January"
+                                                  #selected = month.name[max(1, month(Sys.Date())-1)]
                                      ),
                                      
                                      plotOutput('map_plot', 
