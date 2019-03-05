@@ -73,7 +73,8 @@ fluidPage(
                                                 width = '100%', 
                                                 click = 'map_click', 
                                                 dblclick = 'map_dblclick', 
-                                                hover = 'map_hover')
+                                                hover = 'map_hover'),
+                                     strong('Higher thermal stress anomalies may likely correspond to more water-stressed conditions.')
                             ),
                             
                             tabPanel('Temporal Variation', 
@@ -123,7 +124,7 @@ fluidPage(
                                                 hover = 'physio_hover')
                             ),
                             
-                            tabPanel('Percent Tree Cover', 
+                            tabPanel('Percent Tree Cover Map', 
                                      br(),
                                      br(),
                                      br(),
