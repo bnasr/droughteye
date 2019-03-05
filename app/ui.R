@@ -69,12 +69,15 @@ fluidPage(
                                      br(),
 
                                      
+                                     h4('Higher thermal stress anomalies may likely correspond to more water-stressed conditions.'),
+
+                                     br(),
+                                     br(),
                                      plotOutput('map_plot', 
                                                 width = '100%', 
                                                 click = 'map_click', 
                                                 dblclick = 'map_dblclick', 
-                                                hover = 'map_hover'),
-                                     strong('Higher thermal stress anomalies may likely correspond to more water-stressed conditions.')
+                                                hover = 'map_hover')
                             ),
                             
                             tabPanel('Temporal Variation', 
