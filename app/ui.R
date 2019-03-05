@@ -88,8 +88,9 @@ fluidPage(
                                      #              choices = c('mean', 'sd', '2.5%', '25%', '50%', '75%', '97.5%'), 
                                      #              selected = 'mean'
                                      # ),
-                                     br(),
+                                     hr(),
                                      strong('Select ecoregions by clickin and double-clicking on the legend.'),
+                                     br(),
                                      
                                      plotlyOutput('temporal_plot', 
                                                   height = '500px',
