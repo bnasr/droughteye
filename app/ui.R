@@ -74,8 +74,6 @@ fluidPage(
                                      
                                      br(),
                                      br(),
-                                     strong('Select ecoregions by clickin and double-clicking on the legend.'),
-                                     br(),
                                      # downloadButton("downloadtemporal", "Download Data"),
                                      # hr(),
                                      
@@ -90,6 +88,9 @@ fluidPage(
                                      #              choices = c('mean', 'sd', '2.5%', '25%', '50%', '75%', '97.5%'), 
                                      #              selected = 'mean'
                                      # ),
+                                     br(),
+                                     strong('Select ecoregions by clickin and double-clicking on the legend.'),
+                                     
                                      plotlyOutput('temporal_plot', 
                                                   height = '500px',
                                                   width = '100%')
