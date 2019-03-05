@@ -92,7 +92,9 @@ shinyServer(function(input, output, session) {
   
   
   output$map_plot <- renderPlot(
-    height = function(){floor(session$clientData$output_map_plot_width/1.5)}, {
+    height = function(){floor(session$clientData$output_map_plot_width/1.7)}, 
+    bg="transparent",
+    {
       
       path <- map_path()
       if(is.null(path)) {
@@ -118,8 +120,8 @@ shinyServer(function(input, output, session) {
       else
         r <- setRange(map_raster)
       
-      par(mar=c(6,6,4,1), bty='n', xpd = TRUE)
-      par(bg = 'blue')
+      par(mar=c(0, 0, 5, 0), bty='n', xpd = TRUE, bg = NA)
+      # par(bg = 'blue')
       
       plot(r, col = col, legend = F, xaxt='n', yaxt = 'n')
       
@@ -130,8 +132,9 @@ shinyServer(function(input, output, session) {
       
       # axis(1, line = 1, cex.axis = 2)
       # axis(2, line = 1, cex.axis = 2)
+      par(col = '#d0d0d0', col.axis = '#d0d0d0', col.lab = '#d0d0d0')
       
-      mtext(plot_title(), font=2, line = 1, cex = 2)
+      mtext(plot_title(), font=2, line = 0, cex = 3)
       # mtext('Longitude (°)', font = 2, line = 4, cex = 2, side =1)
       # mtext('Latitude (°)', font = 2, line = 4, cex = 2, side =2)
       
@@ -148,9 +151,9 @@ shinyServer(function(input, output, session) {
   
   plot_title <- reactive({
     switch(input$mapType,
-           'Normal' = paste('Normal thermal stress in', input$month, 'across the USA'),
-           'Temporal' =  paste('Thermal stress in', input$month, input$year, 'across the USA'),
-           'Anomaly' =  paste('Thermal stress anomaly in', input$month, input$year, 'across the USA'))
+           'Normal' = paste('Normal Thermal Stress in', input$month, 'Across the USA'),
+           'Temporal' =  paste('Thermal Stress in', input$month, input$year, 'Across the USA'),
+           'Anomaly' =  paste('Thermal Stress Anomaly in\n', input$month, input$year, 'Across the USA'))
   })
   
   physio <- reactive(
@@ -159,15 +162,18 @@ shinyServer(function(input, output, session) {
   
   
   output$physio_plot <- renderPlot(
-    height = function(){floor(session$clientData$output_physio_plot_width/1.5)}, {
+    height = function(){floor(session$clientData$output_physio_plot_width/1.8)}, 
+    bg="transparent",
+    {
       provs <- physio()
       
       n <- length(provs$PROVINCE)
       labs <- tools::toTitleCase(tolower(provs$PROVINCE))
       colList <- c('NA',rainbow(n-1))
       
+      par(col = '#d0d0d0', col.axis = '#d0d0d0', col.lab = '#d0d0d0')
       
-      par(mar=c(4,2,0,0))
+      par(mar=c(5.5,0,2,0))
       plot(provs, col=colList)
       
       legend(-110, 26.0,legend = labs[2:7] , xpd=T,xjust = 1,
@@ -179,9 +185,9 @@ shinyServer(function(input, output, session) {
       legend(-65, 26.0,legend = labs[20:25] , xpd=T,xjust = 1,
              fill = colList[20:25], bty='n', cex=1.5)
       
-      mtext('Physiographic Regions of the United States', cex=2, font=2, line = -2)
-      scalebar(d = 1000, xy = c(-122, 27),type = 'bar', below = 'kilometers', divs = 4)
-      northArrow(xb = -72, yb = 31, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
+      mtext('Physiographic Regions of the United States', cex=3, font=2, line = 0)
+      # scalebar(d = 1000, xy = c(-122, 27),type = 'bar', below = 'kilometers', divs = 4)
+      # northArrow(xb = -72, yb = 31, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
       
       
       
@@ -189,12 +195,16 @@ shinyServer(function(input, output, session) {
   ) 
   
   output$tree_percent_plot <- renderPlot(
-    height = function(){floor(session$clientData$output_tree_percent_plot_width/1.7)}, {
+    height = function(){floor(session$clientData$output_tree_percent_plot_width/1.7)}, 
+    bg = 'transparent',
+    {
       tpc <- raster(paste0(data_repo, 'tree_percent_cover.tif'))
       
       # col <- colorRampPalette(colList.brownGreen[-(1:2)])(100)
       col <- rev(terrain.colors(100))
-      par(mar=c(6,6,4,1), bty='n', xpd = TRUE)
+      par(mar=c(0,0,2,0), bty='n', xpd = TRUE)
+      par(col = '#d0d0d0', col.axis = '#d0d0d0', col.lab = '#d0d0d0')
+      
       plot(tpc, col = col, legend = F, xaxt='n', yaxt = 'n')
       
       switch(input$layout, 
@@ -202,15 +212,16 @@ shinyServer(function(input, output, session) {
              'State Borders' = map('state', add = T, lwd = 2),
              'Physiographic Regions' = plot(physio(), add = T, lwd = 2))
       
-      axis(1, line = 1, cex.axis = 2)
-      axis(2, line = 1, cex.axis = 2)
+      # axis(1, line = 1, cex.axis = 2)
+      # axis(2, line = 1, cex.axis = 2)
+      par(col = '#d0d0d0', col.axis = '#d0d0d0', col.lab = '#d0d0d0')
       
-      mtext('Percent Tree Cover from NLCD', font=2, line = 1, cex = 3)
-      mtext('Longitude (°)', font = 2, line = 4, cex = 2, side =1)
-      mtext('Latitude (°)', font = 2, line = 4, cex = 2, side =2)
+      mtext('Percent Tree Cover from NLCD', font=2, line = 0, cex = 3)
+      # mtext('Longitude (°)', font = 2, line = 4, cex = 2, side =1)
+      # mtext('Latitude (°)', font = 2, line = 4, cex = 2, side =2)
       
-      scalebar(d = 1000, xy = c(-122, 26),type = 'bar', below = 'kilometers', divs = 4)
-      northArrow(xb = -75, yb = 25, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
+      # scalebar(d = 1000, xy = c(-122, 26),type = 'bar', below = 'kilometers', divs = 4)
+      # northArrow(xb = -75, yb = 25, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
       insertLegend(c(0, 100), col, legtext = '%')
       
     }

@@ -25,6 +25,13 @@ fluidPage(
                              selected = 2019
                              # selected = year(Sys.Date())
                              ),
+                 selectInput('month', 
+                              label = NULL, 
+                              # inline = TRUE,
+                              choices = month.name,
+                              selected = "January"
+                              #selected = month.name[max(1, month(Sys.Date())-1)]
+                 ),
                  hr(),
                  
                  radioButtons('colorpal', 
@@ -44,7 +51,14 @@ fluidPage(
                               selected = 'Physiographic Regions'),
                  
                  hr(),
-                 uiOutput("hovervalues")
+                 strong('Mouse-over Location:'),
+                 br(),
+                 br(),
+                 uiOutput("hovervalues"),
+                 
+                 hr(),
+                 downloadButton("downloadmap", "Download Raster")
+                 
                  
     ),
     
@@ -53,15 +67,7 @@ fluidPage(
                             
                             tabPanel('Thermal Stress Map',
                                      br(),
-                                     downloadButton("downloadmap", "Download Raster"),
-                                     hr(),
-                                     radioButtons('month', 
-                                                  label = NULL, 
-                                                  inline = TRUE,
-                                                  choices = month.name,
-                                                  selected = "January"
-                                                  #selected = month.name[max(1, month(Sys.Date())-1)]
-                                     ),
+
                                      
                                      plotOutput('map_plot', 
                                                 width = '100%', 
