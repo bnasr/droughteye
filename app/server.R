@@ -100,8 +100,14 @@ shinyServer(function(input, output, session) {
       if(is.null(path)) {
         par(mar=c(0,0,0,0))
         plot(NA, xlim=c(0,1), ylim=c(0,1), xaxs='i',yaxs='i', xaxt='n', yaxt='n', bty='o', xlab='',ylab='')
-        text(mean(par()$usr[1:2]), mean(par()$usr[3:4]), 
-             'MODIS data for the selected month have not become available yet!', font=2, adj=.5, cex=2)
+        q <- par()$usr
+        text(q[1] + (q[2]-q[1])*0.5,
+             q[1] + (q[2]-q[1])*0.8, 
+             'MODIS data for the selected month have not become available yet!',
+             font=2, 
+             adj=.5, 
+             cex=3, 
+             col = '#C0C0C0')
         return()
       }
       
@@ -153,7 +159,7 @@ shinyServer(function(input, output, session) {
     switch(input$mapType,
            'Normal' = paste('Normal Thermal Stress in', input$month, 'Across the USA'),
            'Temporal' =  paste('Thermal Stress in', input$month, input$year, 'Across the USA'),
-           'Anomaly' =  paste('Thermal Stress Anomaly in\n', input$month, input$year, 'Across the USA'))
+           'Anomaly' =  paste('Thermal Stress Anomaly in', input$month, input$year, 'Across the USA'))
   })
   
   physio <- reactive(
@@ -173,19 +179,19 @@ shinyServer(function(input, output, session) {
       
       par(col = '#d0d0d0', col.axis = '#d0d0d0', col.lab = '#d0d0d0')
       
-      par(mar=c(5,0,2,0))
+      par(mar=c(0,0,9,0))
       plot(provs, col=colList)
       
-      legend(-110, 26.0,legend = labs[2:7] , xpd=T,xjust = 1,
+      legend(-115, 54.5,legend = labs[2:7] , xpd=T,xjust = 1,
              fill = colList[2:7], bty='n', cex=1.5)
-      legend(-97, 26.0,legend = labs[8:13] , xpd=T,xjust = 1,
+      legend(-97, 54.5,legend = labs[8:13] , xpd=T,xjust = 1,
              fill = colList[8:13], bty='n', cex=1.5)
-      legend(-80, 26.0,legend = labs[14:19] , xpd=T,xjust = 1,
+      legend(-80, 54.5,legend = labs[14:19] , xpd=T,xjust = 1,
              fill = colList[14:19], bty='n', cex=1.5)
-      legend(-65, 26.0,legend = labs[20:25] , xpd=T,xjust = 1,
+      legend(-65, 54.5,legend = labs[20:25] , xpd=T,xjust = 1,
              fill = colList[20:25], bty='n', cex=1.5)
       
-      mtext('Physiographic Regions of the United States', cex=3, font=2, line = 0)
+      mtext('Physiographic Regions of the United States', cex=3, font=2, line = 7)
       # scalebar(d = 1000, xy = c(-122, 27),type = 'bar', below = 'kilometers', divs = 4)
       # northArrow(xb = -72, yb = 31, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
       
@@ -331,7 +337,14 @@ shinyServer(function(input, output, session) {
       if(is.null(zonal_stats)){
         par(mar=c(0,0,0,0))
         plot(NA, xlim=c(0,1), ylim=c(0,1), xaxs='i',yaxs='i', xaxt='n', yaxt='n', bty='o', xlab='',ylab='')
-        text(mean(par()$usr[1:2]), mean(par()$usr[3:4]), 'MODIS data for the selected month have not become available yet!', font=2, adj=.5, cex=2)
+        q <- par()$usr
+        text(q[1] + (q[2]-q[1])*0.5,
+             q[1] + (q[2]-q[1])*0.8, 
+             'MODIS data for the selected month have not become available yet!',
+             font=2, 
+             adj=.5, 
+             cex=3, 
+             col = '#C0C0C0')
         return()
       }
       
