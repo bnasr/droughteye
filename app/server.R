@@ -179,19 +179,19 @@ shinyServer(function(input, output, session) {
       
       par(col = '#d0d0d0', col.axis = '#d0d0d0', col.lab = '#d0d0d0')
       
-      par(mar=c(0,0,9,0))
+      par(mar=c(5,0,2,0))
       plot(provs, col=colList)
       
-      legend(-115, 54.5,legend = labs[2:7] , xpd=T,xjust = 1,
+      legend(-110, 26.0,legend = labs[2:7] , xpd=T,xjust = 1,
              fill = colList[2:7], bty='n', cex=1.5)
-      legend(-97, 54.5,legend = labs[8:13] , xpd=T,xjust = 1,
+      legend(-97, 26.0,legend = labs[8:13] , xpd=T,xjust = 1,
              fill = colList[8:13], bty='n', cex=1.5)
-      legend(-80, 54.5,legend = labs[14:19] , xpd=T,xjust = 1,
+      legend(-80, 26.0,legend = labs[14:19] , xpd=T,xjust = 1,
              fill = colList[14:19], bty='n', cex=1.5)
-      legend(-65, 54.5,legend = labs[20:25] , xpd=T,xjust = 1,
+      legend(-65, 26.0,legend = labs[20:25] , xpd=T,xjust = 1,
              fill = colList[20:25], bty='n', cex=1.5)
       
-      mtext('Physiographic Regions of the United States', cex=3, font=2, line = 7)
+      mtext('Physiographic Regions of the United States', cex=3, font=2, line = 0)
       # scalebar(d = 1000, xy = c(-122, 27),type = 'bar', below = 'kilometers', divs = 4)
       # northArrow(xb = -72, yb = 31, len=1.5, lab="N", tcol = 'black', font.lab = 2, col='black')  
       
