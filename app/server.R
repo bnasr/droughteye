@@ -162,7 +162,7 @@ shinyServer(function(input, output, session) {
   
   
   output$physio_plot <- renderPlot(
-    height = function(){floor(session$clientData$output_physio_plot_width/1.8)}, 
+    height = function(){floor(session$clientData$output_physio_plot_width/1.5)}, 
     bg="transparent",
     {
       provs <- physio()
@@ -173,7 +173,7 @@ shinyServer(function(input, output, session) {
       
       par(col = '#d0d0d0', col.axis = '#d0d0d0', col.lab = '#d0d0d0')
       
-      par(mar=c(7,0,2,0))
+      par(mar=c(5,0,2,0))
       plot(provs, col=colList)
       
       legend(-110, 26.0,legend = labs[2:7] , xpd=T,xjust = 1,
