@@ -74,6 +74,7 @@ fluidPage(
                                      
                                      br(),
                                      br(),
+                                     strong('Select ecoregions by clickin and double-clicking on the legend.'),
                                      br(),
                                      # downloadButton("downloadtemporal", "Download Data"),
                                      # hr(),
