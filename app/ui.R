@@ -9,7 +9,7 @@ fluidPage(
   title =  titlePanel(title = 'Drought Eye: Monitoring Thermal Stress in Near Real-time', windowTitle = 'windowTitle'), 
   sidebarLayout(
     
-    sidebarPanel(width = 2,
+    sidebarPanel(width = 3,
                  radioButtons(inputId = "mapType",
                               label = 'Map Type', 
                               choices = list(
@@ -69,10 +69,10 @@ fluidPage(
                  
     ),
     
-    mainPanel = mainPanel(width = 10,
+    mainPanel = mainPanel(width = 9,
                           tabsetPanel(
                             
-                            tabPanel('Thermal Stress Map',
+                            tabPanel('Thermal Stress',
                                      br(),
                                      
                                      
@@ -86,7 +86,7 @@ fluidPage(
                                                 hover = 'map_hover')
                             ),
                             
-                            tabPanel('Temporal Variation', 
+                            tabPanel('Temporal', 
                                      
                                      br(),
                                      br(),
@@ -114,7 +114,7 @@ fluidPage(
                                                   width = '100%')
                             ),
                             
-                            tabPanel('Zonal Statistics', 
+                            tabPanel('Zonal', 
                                      br(),
                                      br(),
                                      br(),
@@ -124,7 +124,7 @@ fluidPage(
                                                 width = '100%')
                             ),
                             
-                            tabPanel('Physiographic Map', 
+                            tabPanel('Physiographic', 
                                      br(),
                                      br(),
                                      br(),
@@ -133,7 +133,7 @@ fluidPage(
                                                 hover = 'physio_hover')
                             ),
                             
-                            tabPanel('Percent Tree Cover Map', 
+                            tabPanel('Percent Tree Cover', 
                                      br(),
                                      br(),
                                      br(),
