@@ -103,7 +103,7 @@ shinyServer(function(input, output, session) {
         q <- par()$usr
         text(q[1] + (q[2]-q[1])*0.5,
              q[1] + (q[2]-q[1])*0.8, 
-             'MODIS data for the selected month have not become available yet!',
+             'MODIS data is not out yet!',
              font=2, 
              adj=.5, 
              cex=3, 
