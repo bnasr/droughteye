@@ -1,8 +1,11 @@
 fluidPage(
+  theme = shinytheme('darkly'),
+  
+  shinyjs::useShinyjs(), 
+  
   br(),
   h1('Drought Eye: Monitoring Thermal Stress in Near Real-time'),
   hr(),
-  theme = shinytheme('darkly'),
   title =  titlePanel(title = 'Drought Eye: Monitoring Thermal Stress in Near Real-time', windowTitle = 'windowTitle'), 
   sidebarLayout(
     
