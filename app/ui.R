@@ -137,7 +137,7 @@ fluidPage(
                             ),
                             
                             tabPanel('About and Citation',{
-                              includeHTML('about.html')
+                              uiOutput('about')
                             })
                           )
                           

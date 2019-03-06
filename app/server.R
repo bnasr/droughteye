@@ -427,4 +427,8 @@ shinyServer(function(input, output, session) {
       file.copy(path, file)
     }
   )
+  
+  output$about <- renderUI(
+    includeHTML('about.html')
+  )
 })
