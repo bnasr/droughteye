@@ -54,10 +54,10 @@ fluidPage(
                  strong('Mouse-over Location:'),
                  br(),
                  br(),
-                 uiOutput("hovervalues"),
+                 uiOutput("hovervalues")
                  
-                 hr(),
-                 downloadButton("downloadmap", "Download Raster")
+                 # hr(),
+                 # downloadButton("downloadmap", "Download Raster")
                  
                  
     ),
