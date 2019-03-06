@@ -446,7 +446,20 @@ shinyServer(function(input, output, session) {
                           inputId = 'year', 
                           selected = y -1)
       }
-    }else if(m==12){
+    }else{
+      updateSelectInput(session = session, 
+                        inputId = 'month', 
+                        selected = month.name[m-1]
+      )
+    }
+  })
+  
+  
+  observeEvent(input$next_month,{
+    y <- as.numeric(input$year)
+    m <- monthid()
+    
+    if(m==12){
       if(y!=year(Sys.Date())){
         updateSelectInput(session = session, 
                           inputId = 'month', 
@@ -459,8 +472,18 @@ shinyServer(function(input, output, session) {
     }else{
       updateSelectInput(session = session, 
                         inputId = 'month', 
-                        selected = month.name[m-1]
+                        selected = month.name[m+1]
       )
     }
+  })
+  
+  observeEvent(input$mapType,{
+    
+    if(input$mapType=='Normal')
+      shinyjs::disable('year')
+    else
+      shinyjs::enable('year')
+    
+    
   })
 })
