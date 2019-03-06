@@ -24,13 +24,17 @@ fluidPage(
                              choices = 2001:year(Sys.Date()), 
                              selected = 2019
                              # selected = year(Sys.Date())
-                             ),
+                 ),
                  selectInput('month', 
-                              label = NULL, 
-                              # inline = TRUE,
-                              choices = month.name,
-                              selected = "January"
-                              #selected = month.name[max(1, month(Sys.Date())-1)]
+                             label = NULL, 
+                             # inline = TRUE,
+                             choices = month.name,
+                             selected = "January"
+                             #selected = month.name[max(1, month(Sys.Date())-1)]
+                 ),
+                 fluidRow(
+                   column(6, actionButton('last_month', label = 'Last Month')),
+                   column(6, actionButton('next_month', label = 'Next Month'))
                  ),
                  hr(),
                  
@@ -67,11 +71,10 @@ fluidPage(
                             
                             tabPanel('Thermal Stress Map',
                                      br(),
-
+                                     
                                      
                                      h4('Higher thermal stress anomalies may likely correspond to more water-stressed conditions.'),
-
-                                     br(),
+                                     
                                      br(),
                                      plotOutput('map_plot', 
                                                 width = '100%', 

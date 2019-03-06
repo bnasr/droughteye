@@ -222,7 +222,7 @@ shinyServer(function(input, output, session) {
       # axis(2, line = 1, cex.axis = 2)
       par(col = '#d0d0d0', col.axis = '#d0d0d0', col.lab = '#d0d0d0')
       
-      mtext('Percent Tree Cover from NLCD', font=2, line = 0, cex = 3)
+      mtext('Percent Tree Cover', font=2, line = 0, cex = 3)
       # mtext('Longitude (°)', font = 2, line = 4, cex = 2, side =1)
       # mtext('Latitude (°)', font = 2, line = 4, cex = 2, side =2)
       
@@ -431,4 +431,36 @@ shinyServer(function(input, output, session) {
   output$about <- renderUI(
     includeHTML('about.html')
   )
+  
+  observeEvent(input$last_month,{
+    y <- as.numeric(input$year)
+    m <- monthid()
+    
+    if(m==1){
+      if(y!=2000){
+        updateSelectInput(session = session, 
+                          inputId = 'month', 
+                          selected = month.name[12])
+        
+        updateSelectInput(session = session,
+                          inputId = 'year', 
+                          selected = y -1)
+      }
+    }else if(m==12){
+      if(y!=year(Sys.Date())){
+        updateSelectInput(session = session, 
+                          inputId = 'month', 
+                          selected = month.name[1])
+        
+        updateSelectInput(session = session,
+                          inputId = 'year', 
+                          selected = y + 1)
+      }
+    }else{
+      updateSelectInput(session = session, 
+                        inputId = 'month', 
+                        selected = month.name[m-1]
+      )
+    }
+  })
 })
