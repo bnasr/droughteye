@@ -9,11 +9,15 @@ source('app/funcs.R')
 this_month <- month(Sys.Date())
 this_year <- year(Sys.Date())
 
-for(y in 2001:this_year){
-  for(m in 1:12){
+y1 <- ifelse(LST_SOURCE=='TERRA', 2001, 2002)
+
+for(y in y1:this_year){
+  
+  m1 <- ifelse(LST_SOURCE=='AQUA'&y==2002, 7, 1)
+  for(m in m1:12){
     if(y==this_year&m>=this_month) next()
     cat('writing deltaT for', y, m, '\n')
-    write_detla_t_anomaly(y, m, deltat_repo)
+    write_delta_t_anomaly(y, m)
   }
 }
 

@@ -27,25 +27,25 @@ download_hdf <- function(hdf,
 
 
 # getMOD11C3 and convert LST to geotiff
-get_MOD11C3 <- function(year, month, modis_repo){
-  page_url <- sprintf(fmt = '%s%04d.%02d.01/', mcd11c3_web_repo, year, month)
+get_LST <- function(year, month){
+  page_url <- sprintf(fmt = '%s%04d.%02d.01/', lst_webrepo, year, month)
   
   hdf_url <- get_hdf(page_url)
   
   
-  hdf_path <- paste0(modis_repo, 'HDF/', basename(hdf_url))
+  hdf_path <- paste0(lst_repo, 'HDF/', basename(hdf_url))
   
   if(file.exists(hdf_path))
     cat(hdf_path, ' already exists!\n')
   else
     hdf_path <- download_hdf(hdf_url, 
-                             dest_dir = paste0(modis_repo, 'HDF/'), 
+                             dest_dir = paste0(lst_repo, 'HDF/'), 
                              user = 'bijan', 
                              pass = readLines('.key.txt'))
   
   # data <- gdalUtils::get_subdatasets(hdf_path)
   
-  tiff_path <- sprintf(fmt = '%sGEOTIFF/LST.Day.%04d.%02d.01.tif', modis_repo, year, month)
+  tiff_path <- sprintf(fmt = '%sGEOTIFF/LST.Day.%04d.%02d.01.tif', lst_repo, year, month)
   
   if(file.exists(tiff_path)){
     cat(tiff_path, ' already exists!\n')
@@ -56,8 +56,8 @@ get_MOD11C3 <- function(year, month, modis_repo){
   tiff_path
 }
 
-# read modis and prism and write detla T
-write_detla_t_temporal <- function(y, m, deltat_repo){
+# read modis and prism and write delta T
+write_delta_t_temporal <- function(y, m){
   
   delta_path <- sprintf(fmt = '%sTEMPORAL/DELTAT.TEMPORAL.%04d.%02d.01.tif', deltat_repo, y, m)
   
@@ -68,7 +68,7 @@ write_detla_t_temporal <- function(y, m, deltat_repo){
   
   
   lst_path <- sprintf(fmt = '%sGEOTIFF/LST.Day.%04d.%02d.01.tif', 
-                      modis_repo, y, m)
+                      lst_repo, y, m)
   
   prism_stable_path <- sprintf(fmt = '%sPRISM_tmean_stable_4kmM2_%04d%02d_bil/PRISM_tmean_stable_4kmM2_%04d%02d_bil.bil', 
                                prism_repo, y, m, y, m)
@@ -107,7 +107,7 @@ write_detla_t_temporal <- function(y, m, deltat_repo){
 }
 
 
-write_detla_t_normal <- function(m, deltat_repo){
+write_delta_t_normal <- function(m){
   
   delta_normal_path <- sprintf(fmt = '%sNORMAL/DELTAT.NORMAL.%02d.01.tif', deltat_repo, m)
   
@@ -116,7 +116,7 @@ write_detla_t_normal <- function(m, deltat_repo){
     return(delta_normal_path)
   }
   
-  y <- 2001:2012
+  y <- if(LST_SOURCE=='TERRA') (2001:2012)else (2003:2012)
   
   delta_path <- sprintf(fmt = '%sTEMPORAL/DELTAT.TEMPORAL.%04d.%02d.01.tif', deltat_repo, y, m)
   
@@ -135,7 +135,7 @@ write_detla_t_normal <- function(m, deltat_repo){
   return(delta_normal_path)
 }
 
-write_detla_t_anomaly <- function(y, m, deltat_repo){
+write_delta_t_anomaly <- function(y, m){
   
   delta_anomaly_path <- sprintf(fmt = '%sANOMALY/DELTAT.ANOMALY.%04d.%02d.01.tif', deltat_repo, y, m)
   

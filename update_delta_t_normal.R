@@ -8,7 +8,7 @@ source('app/funcs.R')
 
 for(m in 1:12){
   cat('writing deltaT normal for', m, '\n')
-  write_detla_t_normal(m, deltat_repo)
+  write_delta_t_normal(m)
 }
 
 cat(Sys.time(), '\t delta_t_normal done!\n')

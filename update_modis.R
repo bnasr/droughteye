@@ -10,11 +10,15 @@ source('app/funcs.R')
 this_month <- month(Sys.Date())
 this_year <- year(Sys.Date())
 
-for(y in 2001:this_year){
-  for(m in 1:12){
+y1 <- ifelse(LST_SOURCE=='TERRA', 2001, 2002)
+
+for(y in y1:this_year){
+  
+  m1 <- ifelse(LST_SOURCE=='AQUA'&y==2002, 7, 1)
+  for(m in m1:12){
     if(y==this_year&m>=this_month) next()
     cat('getting MODIS for', y, m, '\n')
-    try(get_MOD11C3(year = y, month = m, modis_repo = modis_repo))
+    try(get_LST(year = y, month = m))
   }
 }
 
