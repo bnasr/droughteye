@@ -70,10 +70,10 @@ write_delta_t_temporal <- function(y, m){
   lst_path <- sprintf(fmt = '%sGEOTIFF/LST.Day.%04d.%02d.01.tif', 
                       lst_repo, y, m)
   
-  prism_stable_path <- sprintf(fmt = '%sPRISM_tmean_stable_4kmM2_%04d%02d_bil/PRISM_tmean_stable_4kmM2_%04d%02d_bil.bil', 
+  prism_stable_path <- sprintf(fmt = '%sPRISM_tmean_stable_4kmM3_%04d%02d_bil/PRISM_tmean_stable_4kmM2_%04d%02d_bil.bil', 
                                prism_repo, y, m, y, m)
   
-  prism_provisional_path <- sprintf(fmt = '%sPRISM_tmean_provisional_4kmM2_%04d%02d_bil/PRISM_tmean_provisional_4kmM2_%04d%02d_bil.bil', 
+  prism_provisional_path <- sprintf(fmt = '%sPRISM_tmean_provisional_4kmM3_%04d%02d_bil/PRISM_tmean_provisional_4kmM2_%04d%02d_bil.bil', 
                                     prism_repo, y, m, y, m)
   
   if(file.exists(prism_stable_path)){
