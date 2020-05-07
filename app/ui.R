@@ -25,14 +25,14 @@ fluidPage(
                  selectInput('year', 
                              label = 'Year', 
                              choices = 2001:year(Sys.Date()), 
-                             selected = 2019
+                             selected = year(Sys.Date()-40)
                              # selected = year(Sys.Date())
                  ),
                  selectInput('month', 
                              label = NULL, 
                              # inline = TRUE,
                              choices = month.name,
-                             selected = "January"
+                             selected = month.name[month(Sys.Date()-40)]
                              #selected = month.name[max(1, month(Sys.Date())-1)]
                  ),
                  fluidRow(
